@@ -1,0 +1,42 @@
+[
+    {
+        "pipeSectionId": "1800",
+        "pipeThickness": "18.684"
+    },
+    {
+        "pipeSectionId": "1780",
+        "pipeThickness": "18.36"
+    },
+    {
+        "pipeSectionId": "2000",
+        "pipeThickness": "19.154"
+    },
+    {
+        "pipeSectionId": "2300",
+        "pipeThickness": "19.567"
+    },
+    {
+        "pipeSectionId": "1875",
+        "pipeThickness": "19.913"
+    },
+    {
+        "pipeSectionId": "2120",
+        "pipeThickness": "20.432"
+    },
+    {
+        "pipeSectionId": "1920",
+        "pipeThickness": "20.213"
+    },
+    {
+        "pipeSectionId": "2208",
+        "pipeThickness": "20.864"
+    },
+    {
+        "pipeSectionId": "1945",
+        "pipeThickness": "20.987"
+    },
+    {
+        "pipeSectionId": "1810",
+        "pipeThickness": "18.75"
+    }
+]
