@@ -2,7 +2,7 @@ export const PIPE_CONSTANTS = {
     pipeOuterRadius: 6,
     pipeInnerRadius: 5,
     minAcceptableThreshold: 18.96,
-    pipeSectionScaleFactor: 5,
+    pipeSectionScaleFactor: 10,
 }
 
 export const COLOURS = {

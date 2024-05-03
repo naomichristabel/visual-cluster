@@ -28,7 +28,7 @@ let DOT_COLOR = '';
 // re-use for instance computations
 const scratchColor = new THREE.Color();
 
-const usePointColors = ({ data, selectedPoint }) => {
+const usePointColors = ({ data, selectedPoint, selectedPoints }) => {
   const numPoints = data?.length;
   const colorAttrib = React.useRef();
   const colorArray = React.useMemo(() => new Float32Array(numPoints * 3), [
@@ -36,7 +36,75 @@ const usePointColors = ({ data, selectedPoint }) => {
   ]);
 
   React.useEffect(() => {
-    if (selectedPoint?.pipeThickness < PIPE_CONSTANTS.minAcceptableThreshold) {
+console.log('selectedPoints',selectedPoints)
+console.log('selectedPoint',selectedPoint)
+    if(selectedPoints?.length > 0  && !selectedPoint?.pipeSectionId) {  //MULTIPLE POINTS
+      for (let i = 0; i < data?.length; ++i) {
+        const point = data[i];
+        let pointColor = COLOURS.grey;
+  
+        // Check if the point matches any of the selected points
+        const isSelected = selectedPoints.some(selPoint => {
+          return point.pipeSectionId === selPoint.pipeSectionId;
+        });
+
+        if (isSelected) {
+          if (point.pipeThickness < PIPE_CONSTANTS.minAcceptableThreshold) {
+            pointColor = COLOURS.red;
+          } else if ((point.pipeThickness > PIPE_CONSTANTS.minAcceptableThreshold) && point.pipeThickness < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.amber;
+          } else if (point.pipeThickness > ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && (point.pipeThickness < (0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.yellow;
+          } else if (point.pipeThickness > ((0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.green;
+          }
+        }
+          // Set color for the point
+        scratchColor.set(pointColor);
+        scratchColor.toArray(colorArray, i * 3);
+      }
+    } else if(selectedPoints?.length > 0 && selectedPoint?.pipeSectionId) {
+      
+      for (let i = 0; i < data?.length; ++i) {
+        const point = data[i];
+        let pointColor = COLOURS.grey;
+      
+        // Check if the point matches any of the selected points
+        const isSelected = selectedPoints.some(selPoint => {
+          return point.pipeSectionId === selPoint.pipeSectionId;
+        });
+      
+        if (isSelected) {
+          if (point.pipeThickness < PIPE_CONSTANTS.minAcceptableThreshold) {
+            pointColor = COLOURS.red;
+          } else if ((point.pipeThickness > PIPE_CONSTANTS.minAcceptableThreshold) && point.pipeThickness < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.amber;
+          } else if (point.pipeThickness > ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && (point.pipeThickness < (0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.yellow;
+          } else if (point.pipeThickness > ((0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.green;
+          }
+        }
+      
+        if (selectedPoint && point.pipeSectionId === selectedPoint.pipeSectionId) {
+          if (selectedPoint.pipeThickness < PIPE_CONSTANTS.minAcceptableThreshold) {
+            pointColor = COLOURS.red;
+          } else if ((selectedPoint.pipeThickness > PIPE_CONSTANTS.minAcceptableThreshold) && (selectedPoint.pipeThickness < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold))) {
+            pointColor = COLOURS.amber;
+          } else if (selectedPoint.pipeThickness > ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && selectedPoint.pipeThickness < ((0.10 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.yellow;
+          } else if (selectedPoint.pipeThickness > ((0.10 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+            pointColor = COLOURS.green;
+          }
+        }
+      
+        // Set color for the point
+        scratchColor.set(pointColor);
+        scratchColor.toArray(colorArray, i * 3);
+      }
+
+    } else { //SINGLE POINT
+      if (selectedPoint?.pipeThickness < PIPE_CONSTANTS.minAcceptableThreshold) {
       DOT_COLOR = COLOURS.red
     } else if ((selectedPoint?.pipeThickness > PIPE_CONSTANTS.minAcceptableThreshold) && (selectedPoint?.pipeThickness < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold))) {
       DOT_COLOR = COLOURS.amber
@@ -45,15 +113,18 @@ const usePointColors = ({ data, selectedPoint }) => {
     } else if (selectedPoint?.pipeThickness > ((0.10 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
       DOT_COLOR = COLOURS.green
     }
-
+  
     for (let i = 0; i < data?.length; ++i) {
       scratchColor.set(
         data[i] === (selectedPoint) ? DOT_COLOR : COLOURS.grey
       );
       scratchColor.toArray(colorArray, i * 3);
     }
+
+}
+
     colorAttrib.current.needsUpdate = true;
-  }, [data, selectedPoint, colorArray]);
+  }, [data, selectedPoint, selectedPoints, colorArray]);
 
   return { colorAttrib, colorArray };
 };
@@ -69,7 +140,7 @@ const handleHover = e => {
    const index = instanceId;
    const point = data[index];
 
-   console.log('point...', point)
+   //console.log('point...', point)
 
    // toggle the point
    if (point === selectedPoint) {
@@ -101,7 +172,7 @@ const handleHover = e => {
     const index = instanceId;
     const point = data[index];
   
-    console.log('got point =', point);
+    //console.log('got point =', point);
     // toggle the point
     if (point === selectedPoint) {
       onSelectPoint(null);
@@ -113,9 +184,11 @@ const handleHover = e => {
   return { handlePointerDown, handleClick, handleHover };
 };
 
-const CylinderPoints = ({ data, layout, selectedPoint, onSelectPoint }) => {
+const CylinderPoints = ({ data, layout, selectedPoints, selectedPoint, onSelectPoint }) => {
   const meshRef = React.useRef();
   const numPoints = data?.length;
+
+  const pipeCtx = React.useContext(DataContext);
 
   // run the layout, animating on change
   useAnimatedLayout({
@@ -128,6 +201,7 @@ const CylinderPoints = ({ data, layout, selectedPoint, onSelectPoint }) => {
 
   // update instance matrices only when needed
   React.useEffect(() => {
+    
     updateInstancedMeshMatrices({ mesh: meshRef.current, data });
   }, [data, layout]);
 
@@ -137,7 +211,7 @@ const CylinderPoints = ({ data, layout, selectedPoint, onSelectPoint }) => {
     onSelectPoint,
   });
 
-  const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint });
+  const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, selectedPoints });
  
    return (
     <>
@@ -147,7 +221,7 @@ const CylinderPoints = ({ data, layout, selectedPoint, onSelectPoint }) => {
       frustumCulled={false}
       onPointerOver={handleHover}
       onPointerOut={handleHover}
-      onClick={handleClick}
+      //onClick={handleClick}
       onPointerDown={handlePointerDown}
     >
       <cylinderBufferGeometry attach="geometry" args={[0.5, 0.5, 0.15, 32]}>

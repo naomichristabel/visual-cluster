@@ -4,9 +4,14 @@ const DataContext = createContext();
 
 export const DataContextProvider = (props) => {
     const [pipeData, setPipeData] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
 
     const setPipeDataHandler = (data) => {
-        setPipeData(data)
+        setPipeData(data);
+    }
+
+    const setSelectedOptionsHandler = (data) => {
+      setSelectedOptions(data);
     }
 
     useEffect(() => {
@@ -21,13 +26,16 @@ export const DataContextProvider = (props) => {
           console.error('Error fetching data:', error);
         }
       };
-  
-      fetchData();      
+
+      fetchData(); 
+   
     }, []);
 
     const contextValue = {
         pipeData, 
         setPipeDataHandler,
+        selectedOptions,
+        setSelectedOptionsHandler,
     }
 
 return (
