@@ -24,12 +24,16 @@
 
 
 import * as Plot from "@observablehq/plot";
+import * as d3 from 'd3';
 import { useRef, useEffect, useState, useContext } from "react";
 import DataContext from '../../store/DataProvider'; 
 import { Dropdown } from "./Dropdown";
 import { PIPE_CONSTANTS, COLOURS } from "../../utils/Contants";
+import { mean, deviation } from 'd3-array';
+import { scaleLinear } from 'd3-scale';
+import { line } from 'd3-shape';
 
-const prepareXAxisData = (data) => {
+export const prepareXAxisData = (data) => {
    // Create a map to store unique combinations of count, countPercent, and pipeThickness
    const uniqueCombinations = {};
 
@@ -52,7 +56,7 @@ const prepareXAxisData = (data) => {
 
 }
 
-const prepareYAxisData = (data) => {
+export const prepareYAxisData = (data) => {
   // Create a Set to store unique count values
   const uniqueCountPercents = new Set();
 
@@ -111,8 +115,10 @@ const BarChart = () => {
             anchor: "bottom",
             label: "Pipe Thickness (mm)",
             labelAnchor: "center",
+            labelOffset: 50,
+            labelArrow: "right",
             tickValues: filteredData.map(d => d.pipeThickness), // Specify tick values
-            labelFont: "14px sans-serif", // Customize label font
+            fontSize: 14, // Increase font size of the label
             tickSize: 4, // Specify tick size
             lineWidth: 1, // Adjust axis line width
           }),
@@ -120,9 +126,10 @@ const BarChart = () => {
             anchor: "left",
             label: "Percent",
             labelAnchor: "center",
+            labelOffset: 50,
             ticks: numberOfUniqueCountPercents, // Specify number of ticks
             // tickFormat: "d", // Format tick labels as plain integers
-            labelFont: "14px sans-serif", // Customize label font
+            fontSize: 14,
             tickSize: 4, // Specify tick size
             lineWidth: 1, // Adjust axis line width
           }),
@@ -141,7 +148,7 @@ const BarChart = () => {
   return (
     <>
       <div className='title'>
-          <h2>Bar Chart</h2>
+          <h4>Bar Chart</h4>
       </div>
       <Dropdown
         title="Sort by"

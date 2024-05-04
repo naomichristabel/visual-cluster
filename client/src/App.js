@@ -7,6 +7,9 @@ import DataContext from './store/DataProvider';
 import BarChart from './components/Charts/BarChart';
 import Legend from './components/Charts/Legend';
 import Reset from './components/ThreePointVis/Reset';
+import TrendContainer from './components/Charts/TrendContainer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 //const data = new Array(PIPE_CONSTANTS.pipeSectionCount).fill(0).map((d, id) => ({ id: id + 1, d: Math.round(Math.random() * 1000) / 1000 }));
 //const data = [{ id: 1500 }, { id: 1704 }, { id: 1620 }, { id: 1980 }, { id: 2000 }, { id: 2200 }, { id: 1840 }]
@@ -36,7 +39,7 @@ export default function App() {
   return (
     <DataContextProvider>
       <div className='title'>
-        <h2>Visual Cluster Analysis</h2>
+        <h4>Visual Cluster Analysis</h4>
       </div>
      <div className="App">
         <div className="vis-container">
@@ -61,8 +64,15 @@ export default function App() {
         </div>
         <Legend onReset={handleReset} />
       </div>
-      <div className="chart-section">
-          <BarChart />
+
+      <div className='chart-container'>
+        <div className="chart-section">
+            <BarChart />
+        </div>
+
+        <div className="trend-section">
+            <TrendContainer />
+        </div>
       </div>
     </DataContextProvider>
   );

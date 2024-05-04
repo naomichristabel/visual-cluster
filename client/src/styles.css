@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #000;
+  background-color: #000 !important;
 }
 
 .App {
@@ -21,6 +21,7 @@ body {
   color: #fff;
   text-align: center;
   text-transform: uppercase;
+  padding: 5px;
 }
 
 .vis-container {
@@ -30,6 +31,7 @@ body {
   right: 0;
   bottom: 0;
   border: solid 1px rgb(74, 74, 74);
+  width: 1170px;
 }
 
 .controls {
@@ -80,27 +82,93 @@ body {
 
 .reset-button {
   position: absolute;
-  right: 16px;
+  right: 46px;
   top: 16px;
   z-index: 1;
 }
 
+.chart-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .chart-section {
+  display: flex;
+  flex-direction: column;
   border: solid 1px rgb(74, 74, 74);
   padding: 16px;
   margin-top: 10px;
   margin-left: 50px;
-  width: 500px;
+  width: 30%;
   margin-bottom: 2%;
 }
 
 .bar-chart {
-  width: 450px;
+  width: 105%;
 }
+
+.line-chart {
+  width: 100%;
+}
+
+/* Updated CSS for Dropdown */
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em; /* Adjust as needed */
+}
+
+.dropdown-container select {
+  /* Add any additional styling here */
+}
+
+.trend-section {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px rgb(74, 74, 74);
+  padding: 16px;
+  margin-top: 10px;
+  margin-left: 30px;
+  width: 70%;
+  margin-bottom: 2%;
+}
+
+/* Override the default button styles */
+.nav-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.25;
+  color: #007bff;
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Active button */
+.nav-link.active,
+.nav-link:active,
+.nav-link:focus {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Disabled button */
+.nav-link.disabled,
+.nav-link[disabled] {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
 
 .pipe-legend {
   position: absolute;
-  right: 16px;
+  right: 46px;
   bottom: 16px;
   z-index: 1;
   padding: 0px 5px;
@@ -116,6 +184,10 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.pipe-legend p {
+  margin-top: 5px;
 }
 
 dl dt{
