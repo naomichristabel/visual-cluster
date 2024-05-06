@@ -1,48 +1,50 @@
-import React, { useState } from 'react'
-import TrendChart from './TrendChart';
+import React, { useEffect, useState } from 'react'
+import TrendPlot from './TrendPlot'
+import { LABEL, YEARS } from '../../utils/Contants'
 
-const CURRENT = "Current";
-const UPCOMING = "Upcoming";
-
-const TrendContainer = () => {
-    const [activeTab, setActiveTab] = useState(0);
-
-    const handleTabClick = (tabId) => {
-        setActiveTab(tabId);
-      };
+const TrendContainer = ({ title }) => {
+  const [selectedYear, setSelectedYear] = useState('')
 
   return (
     <>
-      <div className='title'>
-          <h4>Trend Analysis</h4>
+    <div className="container text-center" style={{ color: "#FFF", margin: '30px' }}>
+
+    {(title === LABEL.trendTabs.current) && <h6>{YEARS[title.toLowerCase()]}</h6>}
+
+    {(title !== LABEL.trendTabs.current) &&
+      <select onChange={e => setSelectedYear(e.target.value)}>
+        { YEARS[title.toLowerCase()]?.map(year => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        )) }
+      </select>
+    }
+
+      <div className="row trend-container">
+          {/* <div className="col">
+            <LinePlot direction={LABEL.direction.n} pipeThicknessValues={[18.7, 19.1, 18.6, 18.8, 18.9, 19.5]} pipeSections={[1, 2, 3, 4, 5, 6]} />
+          </div> */}
+           <div className="col">
+            <TrendPlot direction={LABEL.direction.n} />
+          </div>
+          <div className="col">
+            <TrendPlot direction={LABEL.direction.e} />
+          </div>
+        </div>
+
+        <div className="row">
+        <div className="col">
+            <TrendPlot direction={LABEL.direction.w} />
+          </div>
+          <div className="col">
+            <TrendPlot direction={LABEL.direction.s} />
+          </div>
+        </div>
+
       </div>
 
-      <div className="container">
-      <ul className="nav nav-pills justify-content-center mt-3">
-        <li className="nav-item">
-          <button
-            className={`nav-link btn ${activeTab === 0 ? "active" : ""}`}
-            onClick={() => handleTabClick(0)}
-          >
-            {CURRENT}
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link btn ${activeTab === 1 ? "active" : ""}`}
-            onClick={() => handleTabClick(1)}
-          >
-            {UPCOMING}
-          </button>
-        </li>
-      </ul>
-      </div>
-
-      <div className="tab-content">
-        {activeTab === 0 && <TrendChart title={CURRENT}/>}
-        {activeTab === 1 && <TrendChart title={UPCOMING}/>}
-      </div>
-
+    
     </>
   )
 }

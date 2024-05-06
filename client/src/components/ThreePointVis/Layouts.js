@@ -3,24 +3,34 @@ import { useSpring } from 'react-spring/three';
 import { PIPE_CONSTANTS } from '../../utils/Contants';
 import DataContext from '../../store/DataProvider';
 
-function generateRandomNumbersInRange(min, max, count) {
-  const randomNumbers = [];
-  for (let i = 0; i < count; i++) {
-    const randomNumber = Math.random() * (max - min) + min;
-    randomNumbers.push(randomNumber);
-  }
+// function generateRandomNumbersInRange(min, max, count) {
+//   const randomNumbers = [];
+//   for (let i = 0; i < count; i++) {
+//     const randomNumber = Math.random() * (max - min) + min;
+//     randomNumbers.push(randomNumber);
+//   }
 
-  //console.log('random...', randomNumbers)
-  return randomNumbers;
-  }
+//   //console.log('random...', randomNumbers)
+//   return randomNumbers;
+//   }
 
-function generateScaledNumbers(rangeStart, rangeEnd, scale) {
-    const numbers = [];
-    for (let i = rangeStart; i <= rangeEnd; i += scale) {
-      numbers.push(i);
-    }
+// function generateScaledNumbers(rangeStart, rangeEnd, scale) {
+//     const numbers = [];
+//     for (let i = rangeStart; i <= rangeEnd; i += scale) {
+//       numbers.push(i);
+//     }
 
-    return numbers;
+//     return numbers;
+// }
+
+// Function to calculate y and z coordinates for a given circumference point
+function calculateCircumferencePointCoordinates(circumferenceId, totalCircumferencePoints, radius) {
+  var theta = (circumferenceId / totalCircumferencePoints) * Math.PI * 2;
+  console.log('theta',theta)
+  var y = radius * Math.cos(theta);
+  console.log('sin(theta)', Math.sin(theta), 'cos(theta): ', Math.cos(theta))
+  var z = radius * Math.sin(theta);
+  return { y: y, z: z };
 }
 
 function gridLayout(data) {
@@ -28,16 +38,18 @@ function gridLayout(data) {
   const numCols = Math.ceil(Math.sqrt(numPoints));
   const numRows = numCols;
 
-  // Extract pipeSectionId values as numbers
+  // Extract pipeSectionId, circumferenceIds values as numbers
   const pipeSectionIds = data.map(item => parseInt(item.pipeSectionId));
+  const circumferenceIds = data.map(item => parseInt(item.circumferenceId));
+
 
   // Find minimum and maximum values
+  const minValueCircumference = Math.min(...circumferenceIds);
+  
   const minValue = Math.min(...pipeSectionIds);
   const maxValue = Math.max(...pipeSectionIds);
 
-  //console.log('pipeSectionIDs..', pipeSectionIds, "min: ", minValue, "max: ", maxValue)
-
-  const randomNumbers = generateRandomNumbersInRange(-PIPE_CONSTANTS.pipeInnerRadius, PIPE_CONSTANTS.pipeInnerRadius, pipeSectionIds?.length);
+  //const randomNumbers = generateRandomNumbersInRange(-PIPE_CONSTANTS.pipeInnerRadius, PIPE_CONSTANTS.pipeInnerRadius, pipeSectionIds?.length);
   //const scaledNumbers = generateScaledNumbers(minValue, maxValue, PIPE_CONSTANTS.pipeSectionScaleFactor);
 
   if(data) {
@@ -49,10 +61,15 @@ function gridLayout(data) {
       datum.x = (parseInt(data[i].pipeSectionId) - minValue) / PIPE_CONSTANTS.pipeSectionScaleFactor
       //datum.x = scaledNumbers[i + 1];
       //datum.y = randomNumbers[i];
-      datum.y = 0;
+      var circumferenceId = (parseInt(data[i].circumferenceId) - minValueCircumference) / PIPE_CONSTANTS.circumferenceScaleFactor ;
+
+      var { y, z } = calculateCircumferencePointCoordinates(circumferenceId, 5, PIPE_CONSTANTS.pipeOuterRadius);
+      datum.y = y;
+
       //datum.x = (col * 1.05);
       //datum.y = row * 1.05;
-      datum.z = PIPE_CONSTANTS.pipeOuterRadius;
+      datum.z = z;
+      //datum.z = PIPE_CONSTANTS.pipeOuterRadius;
 
       //console.log('co ordinates (x,y,z): ', datum.x, datum.y, datum.z)
     }

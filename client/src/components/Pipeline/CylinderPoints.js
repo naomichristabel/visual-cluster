@@ -45,7 +45,7 @@ console.log('selectedPoint',selectedPoint)
   
         // Check if the point matches any of the selected points
         const isSelected = selectedPoints.some(selPoint => {
-          return point.pipeSectionId === selPoint.pipeSectionId;
+          return (point.pipeSectionId === selPoint.pipeSectionId) && (point.circumferenceId === selPoint.circumferenceId);
         });
 
         if (isSelected) {
@@ -71,7 +71,7 @@ console.log('selectedPoint',selectedPoint)
       
         // Check if the point matches any of the selected points
         const isSelected = selectedPoints.some(selPoint => {
-          return point.pipeSectionId === selPoint.pipeSectionId;
+          return (point.pipeSectionId === selPoint.pipeSectionId) && (point.circumferenceId === selPoint.circumferenceId);
         });
       
         if (isSelected) {
@@ -86,7 +86,7 @@ console.log('selectedPoint',selectedPoint)
           }
         }
       
-        if (selectedPoint && point.pipeSectionId === selectedPoint.pipeSectionId) {
+        if (selectedPoint && (point.pipeSectionId === selectedPoint.pipeSectionId) && (point.circumferenceId=== selectedPoint.circumferenceId)) {
           if (selectedPoint.pipeThickness < PIPE_CONSTANTS.minAcceptableThreshold) {
             pointColor = COLOURS.red;
           } else if ((selectedPoint.pipeThickness > PIPE_CONSTANTS.minAcceptableThreshold) && (selectedPoint.pipeThickness < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold))) {

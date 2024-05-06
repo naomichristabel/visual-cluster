@@ -5,10 +5,12 @@ import { PIPE_CONSTANTS } from './utils/Contants';
 import { DataContextProvider } from './store/DataProvider';
 import DataContext from './store/DataProvider';
 import BarChart from './components/Charts/BarChart';
+import HeatMap from './components/Charts/HeatMap';
 import Legend from './components/Charts/Legend';
 import Reset from './components/ThreePointVis/Reset';
-import TrendContainer from './components/Charts/TrendContainer';
+import TrendTabs from './components/Charts/TrendTabs';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Histogram from './components/Charts/Histogram';
 
 
 //const data = new Array(PIPE_CONSTANTS.pipeSectionCount).fill(0).map((d, id) => ({ id: id + 1, d: Math.round(Math.random() * 1000) / 1000 }));
@@ -57,7 +59,8 @@ export default function App() {
         <div className="controls">
           {selectedPoint && (
             <div className="selected-point">
-              Pipe Section: <strong>{selectedPoint.pipeSectionId}</strong> <br/>
+              Pipe Section ID: <strong>{selectedPoint.pipeSectionId}</strong> <br/>
+              Circumference ID: <strong>{selectedPoint.circumferenceId}</strong> <br/>
               Thickness: <strong>{selectedPoint.pipeThickness} mm</strong>
             </div>
           )}
@@ -67,13 +70,15 @@ export default function App() {
 
       <div className='chart-container'>
         <div className="chart-section">
-            <BarChart />
+            {/* <BarChart /> */}
+            {/* <HeatMap /> */}
+            <Histogram />
         </div>
 
         <div className="trend-section">
-            <TrendContainer />
+            <TrendTabs />
         </div>
-      </div>
+      </div> 
     </DataContextProvider>
   );
 }

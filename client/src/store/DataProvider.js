@@ -5,6 +5,7 @@ const DataContext = createContext();
 export const DataContextProvider = (props) => {
     const [pipeData, setPipeData] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [density, setDensity] = useState();
 
     const setPipeDataHandler = (data) => {
         setPipeData(data);
@@ -12,6 +13,10 @@ export const DataContextProvider = (props) => {
 
     const setSelectedOptionsHandler = (data) => {
       setSelectedOptions(data);
+    }
+
+    const setDensityHandler = (data) => {
+      setDensity(data);
     }
 
     useEffect(() => {
@@ -36,6 +41,8 @@ export const DataContextProvider = (props) => {
         setPipeDataHandler,
         selectedOptions,
         setSelectedOptionsHandler,
+        density,
+        setDensityHandler
     }
 
 return (

@@ -101,6 +101,7 @@ body {
   margin-left: 50px;
   width: 30%;
   margin-bottom: 2%;
+  color: #fff;
 }
 
 .bar-chart {
@@ -213,4 +214,9 @@ dl dt.yellow{
 }
 dl dt.green{
   background: #04dc04;
+}
+
+.trend-container {
+  /* color: #000;
+  background-color: #9a9a9a; */
 }
