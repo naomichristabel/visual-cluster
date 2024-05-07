@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as THREE from 'three';
-import { useAnimatedLayout } from '../ThreePointVis/Layouts';
-import { COLOURS, PIPE_CONSTANTS } from '../../utils/Contants';
-import DataContext from '../../store/DataProvider';
+import { useAnimatedLayout } from '../ThreePointVis/Layouts.js';
+import { COLOURS, PIPE_CONSTANTS } from '../../utils/Contants.js';
+import DataContext from '../../store/DataProvider.js';
 
 // re-use for instance computations
 const scratchObject3D = new THREE.Object3D();
@@ -36,8 +36,8 @@ const usePointColors = ({ data, selectedPoint, selectedPoints }) => {
   ]);
 
   React.useEffect(() => {
-console.log('selectedPoints',selectedPoints)
-console.log('selectedPoint',selectedPoint)
+// console.log('selectedPoints',selectedPoints)
+// console.log('selectedPoint',selectedPoint)
     if(selectedPoints?.length > 0  && !selectedPoint?.pipeSectionId) {  //MULTIPLE POINTS
       for (let i = 0; i < data?.length; ++i) {
         const point = data[i];
@@ -45,6 +45,7 @@ console.log('selectedPoint',selectedPoint)
   
         // Check if the point matches any of the selected points
         const isSelected = selectedPoints.some(selPoint => {
+          //return (point.pipeSectionId === selPoint.pipeSectionId) ;
           return (point.pipeSectionId === selPoint.pipeSectionId) && (point.circumferenceId === selPoint.circumferenceId);
         });
 
@@ -71,6 +72,7 @@ console.log('selectedPoint',selectedPoint)
       
         // Check if the point matches any of the selected points
         const isSelected = selectedPoints.some(selPoint => {
+          //return (point.pipeSectionId === selPoint.pipeSectionId);
           return (point.pipeSectionId === selPoint.pipeSectionId) && (point.circumferenceId === selPoint.circumferenceId);
         });
       
@@ -86,6 +88,7 @@ console.log('selectedPoint',selectedPoint)
           }
         }
       
+        //if (selectedPoint && (point.pipeSectionId === selectedPoint.pipeSectionId) ) {
         if (selectedPoint && (point.pipeSectionId === selectedPoint.pipeSectionId) && (point.circumferenceId=== selectedPoint.circumferenceId)) {
           if (selectedPoint.pipeThickness < PIPE_CONSTANTS.minAcceptableThreshold) {
             pointColor = COLOURS.red;

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber';
-import Controls from './Controls';
-import Cylinder from '../Pipeline/Cylinder';
-import CylinderPoints from '../Pipeline/CylinderPoints';
-import Effects from './Effects';
-import DataContext from '../../store/DataProvider';
-import { PIPE_CONSTANTS } from '../../utils/Contants';
+import Controls from './Controls.js';
+import Cylinder from '../Pipeline/Cylinder.js';
+import CylinderPoints from '../Pipeline/CylinderPoints.js';
+import Effects from './Effects.js';
+import DataContext from '../../store/DataProvider.js';
+import { PIPE_CONSTANTS } from '../../utils/Contants.js';
 
 const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint }, ref) => {
   const pipeCtx = React.useContext(DataContext);
@@ -17,7 +17,7 @@ const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint }, ref) => {
   React.useEffect(() => {
     let selectedOptions = pipeCtx?.selectedOptions;
 
-console.log('selectedOptions: ', selectedOptions)
+//console.log('selectedOptions: ', selectedOptions)
 
     if(selectedOptions && selectedOptions.length > 0) {
       let newPoints = [];
@@ -60,7 +60,7 @@ console.log('selectedOptions: ', selectedOptions)
 
   // React.useEffect(() => {console.log('state data in CP component...',pipeData)}, [pipeData])
 
-  React.useEffect(() => {console.log('state data of selected points in parent ThreeVis component...',selectedPoints)}, [selectedPoints])
+  //React.useEffect(() => {console.log('state data of selected points in parent ThreeVis component...',selectedPoints)}, [selectedPoints])
 
   const controlsRef = React.useRef();
   React.useImperativeHandle(ref, () => ({

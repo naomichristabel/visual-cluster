@@ -1,7 +1,7 @@
 import * as Plot from "@observablehq/plot";
 import { useEffect, useRef, useContext, useState } from "react";
-import { COLOURS } from "../../utils/Contants";
-import DataContext from "../../store/DataProvider";
+import { COLOURS } from "../../utils/Contants.js";
+import DataContext from "../../store/DataProvider.js";
 //import { html } from "@observablehq/stdlib";
 
 const TrendPlot = ({ direction }) => {
@@ -21,25 +21,14 @@ const TrendPlot = ({ direction }) => {
                     Plot.line(coordinates?.map((d, i) => {
                         //console.log('x: ',d.pipeSection, ' y: ', parseFloat(d.pipeThickness))
                         return ({ x: d.pipeSection, y: parseFloat(d.pipeThickness) })
-                    }), {x: "x", y: "y", stroke: "white", strokeWidth: 3, tip: true }),  
-                    // Plot.tip(coordinates?.map((d, i) => ({ x: d.pipeSection, y: parseFloat(d.pipeThickness) })))     
-                    // Plot.tip(coordinates?.map((d, i) => ({
-                    //     x: d.pipeSection,
-                    //     y: parseFloat(d.pipeThickness)
-                    // }))) 
-                    // Plot.tip(coordinates?.map(d => `Pipe Section: ${d.pipeSection}\nPipe Thickness: ${d.pipeThickness}`), {
-                       
-                        
-                    //     fill: "red"
-                    //   })
+                    }), { x: "x", y: "y", stroke: "white", strokeWidth: 3, tip: true }),  
                 ],
                 x: { label: "Pipe Section", labelAnchor: "center", labelOffset: 30 },
                 y: { label: "Pipe Thickness (mm)", labelAnchor: "center", labelOffset: 40 },
-                 //marksTooltip: true // Enable tooltips for all marks
-                // marginTop: 50,
-                // marginBottom: 50,
-                // marginLeft: 50,
-                // marginRight: 50,
+                marginTop: 20,
+                marginBottom: 20,
+                marginLeft: 20,
+                marginRight: 20,
             });
 
             plotRef.current.append(linePlot);

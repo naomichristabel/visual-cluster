@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { useLoader } from "react-three-fiber";
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import * as THREE from 'three';
-import { PIPE_CONSTANTS } from "../../utils/Contants";
+import { PIPE_CONSTANTS } from "../../utils/Contants.js";
 
 const drawCircle = (centerX,centerY,radius,segments) => {
 

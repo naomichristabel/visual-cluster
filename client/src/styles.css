@@ -88,21 +88,27 @@ body {
 }
 
 .chart-container {
-  display: flex;
-  justify-content: space-between;
+  padding: 10px;
+  margin: 10px;
 }
 
 .chart-section {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   border: solid 1px rgb(74, 74, 74);
   padding: 16px;
-  margin-top: 10px;
-  margin-left: 50px;
-  width: 30%;
+  /* margin-top: 10px; */
+  margin-left: 30px !important;
+  /* width: 30%; */
   margin-bottom: 2%;
   color: #fff;
+  text-align: center;
+  text-transform: uppercase;
 }
+
+/* .chart-section text {
+  color: '#FFF';
+} */
 
 .bar-chart {
   width: 105%;
@@ -124,14 +130,18 @@ body {
 }
 
 .trend-section {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   border: solid 1px rgb(74, 74, 74);
   padding: 16px;
-  margin-top: 10px;
-  margin-left: 30px;
-  width: 70%;
+  /* margin-top: 10px; */
+  margin-left: 30px !important;
+  /* width: 70%; */
   margin-bottom: 2%;
+}
+
+.trend-section tspan {
+  color: #000;
 }
 
 /* Override the default button styles */
@@ -220,3 +230,4 @@ dl dt.green{
   /* color: #000;
   background-color: #9a9a9a; */
 }
+

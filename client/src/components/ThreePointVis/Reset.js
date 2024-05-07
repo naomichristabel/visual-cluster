@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import DataContext from '../../store/DataProvider';
+import DataContext from '../../store/DataProvider.js';
 
 const Reset = (props) => {
 

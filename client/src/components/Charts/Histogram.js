@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from 'react'
 import * as Plot from "@observablehq/plot";
-import DataContext from '../../store/DataProvider';
-import { COLOURS, PIPE_CONSTANTS } from '../../utils/Contants';
+import DataContext from '../../store/DataProvider.js';
+import { COLOURS, PIPE_CONSTANTS } from '../../utils/Contants.js';
 import * as d3 from 'd3';
 
 // Kernel density estimation function
@@ -71,7 +71,7 @@ if(pipeCtx?.pipeData?.length > 0) {
               { 
                 x: "pipeThickness", 
                 fill: color,
-                thresholds: calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)), // Adjust the number of thresholds for finer intervals
+                thresholds: calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)) > 5 ? 10 : calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)), // Adjust the number of thresholds for finer intervals
                 title: d => `Pipe Thickness: ${d.pipeThickness}` // Tooltip title showing pipeThickness value
               },
             )
@@ -96,7 +96,7 @@ if(pipeCtx?.pipeData?.length > 0) {
 
   return (
     <div>
-    <h4 style={{ color: 'white', textAlign: 'center' }}>Histogram with Distribution Curve Chart</h4>
+    <h4>Histogram with Distribution Curve Chart</h4>
     <div ref={chartRef} />
   </div>
   )

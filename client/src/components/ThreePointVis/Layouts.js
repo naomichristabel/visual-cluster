@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSpring } from 'react-spring/three';
-import { PIPE_CONSTANTS } from '../../utils/Contants';
-import DataContext from '../../store/DataProvider';
+import { PIPE_CONSTANTS } from '../../utils/Contants.js';
+import DataContext from '../../store/DataProvider.js';
 
 // function generateRandomNumbersInRange(min, max, count) {
 //   const randomNumbers = [];
@@ -26,9 +26,9 @@ import DataContext from '../../store/DataProvider';
 // Function to calculate y and z coordinates for a given circumference point
 function calculateCircumferencePointCoordinates(circumferenceId, totalCircumferencePoints, radius) {
   var theta = (circumferenceId / totalCircumferencePoints) * Math.PI * 2;
-  console.log('theta',theta)
+  //console.log('theta',theta)
   var y = radius * Math.cos(theta);
-  console.log('sin(theta)', Math.sin(theta), 'cos(theta): ', Math.cos(theta))
+  //console.log('sin(theta)', Math.sin(theta), 'cos(theta): ', Math.cos(theta))
   var z = radius * Math.sin(theta);
   return { y: y, z: z };
 }
@@ -61,14 +61,17 @@ function gridLayout(data) {
       datum.x = (parseInt(data[i].pipeSectionId) - minValue) / PIPE_CONSTANTS.pipeSectionScaleFactor
       //datum.x = scaledNumbers[i + 1];
       //datum.y = randomNumbers[i];
+      //datum.y = 0;
+
       var circumferenceId = (parseInt(data[i].circumferenceId) - minValueCircumference) / PIPE_CONSTANTS.circumferenceScaleFactor ;
 
       var { y, z } = calculateCircumferencePointCoordinates(circumferenceId, 5, PIPE_CONSTANTS.pipeOuterRadius);
       datum.y = y;
+      datum.z = z;
 
       //datum.x = (col * 1.05);
       //datum.y = row * 1.05;
-      datum.z = z;
+      
       //datum.z = PIPE_CONSTANTS.pipeOuterRadius;
 
       //console.log('co ordinates (x,y,z): ', datum.x, datum.y, datum.z)

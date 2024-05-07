@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import TrendContainer from './TrendContainer';
-import { LABEL } from '../../utils/Contants';
+import TrendContainer from './TrendContainer.js';
+import { LABEL } from '../../utils/Contants.js';
 
 const TrendTabs = () => {
     const [activeTab, setActiveTab] = useState(1);

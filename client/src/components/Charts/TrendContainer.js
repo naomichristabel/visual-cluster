@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import TrendPlot from './TrendPlot'
-import { LABEL, YEARS } from '../../utils/Contants'
+import TrendPlot from './TrendPlot.js'
+import { LABEL, YEARS } from '../../utils/Contants.js'
 
 const TrendContainer = ({ title }) => {
   const [selectedYear, setSelectedYear] = useState('')
 
   return (
     <>
-    <div className="container text-center" style={{ color: "#FFF", margin: '30px' }}>
+    <div className="container text-center" style={{ color: "#FFF", marginTop: '30px' }}>
 
     {(title === LABEL.trendTabs.current) && <h6>{YEARS[title.toLowerCase()]}</h6>}
 

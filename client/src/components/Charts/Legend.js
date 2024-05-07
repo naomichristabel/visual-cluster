@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { COLOURS, PIPE_CONSTANTS } from '../../utils/Contants';
-import DataContext from '../../store/DataProvider';
+import { COLOURS, PIPE_CONSTANTS } from '../../utils/Contants.js';
+import DataContext from '../../store/DataProvider.js';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -23,7 +23,6 @@ const Legend = (props) => {
     }, [checkedOptions])
 
     React.useEffect(() => {
-        console.log(pipeCtx?.selectedOptions)
         if(pipeCtx?.selectedOptions?.length > 0) {
             setIsReset(false)
         } 
