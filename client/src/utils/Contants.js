@@ -10,6 +10,7 @@ export const COLOURS = {
     amber: '#FF5733',
     green: '#04dc04',
     grey: '#888',
+    mediumGrey: '#6F6F6F',
     darkGrey: '#292929',
     red: '#FF0000',
     yellow: '#FFFF00',

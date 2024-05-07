@@ -112,7 +112,7 @@ useEffect(() => {
   }, [pipeCtx?.pipeData]);
 
   return (
-    <div style={{ marginLeft: '100px' }} >
+    <div style={{ textAlign: 'center' }} >
        <h4>Heat Map</h4>
     </div>
   )

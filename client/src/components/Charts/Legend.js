@@ -39,7 +39,7 @@ const Legend = (props) => {
 
   return (
     <div className='pipe-legend'>
-        <p>{`Minimum Acceptable Threshold (MAT): ${PIPE_CONSTANTS.minAcceptableThreshold} mm`}</p>
+        <span>{`Minimum Acceptable Threshold (MAT): ${PIPE_CONSTANTS.minAcceptableThreshold} mm`}</span>
  
          <FormGroup row className="form-group">
             <FormControlLabel

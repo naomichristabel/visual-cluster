@@ -61,25 +61,24 @@ export default function App() {
         <div onClick={handleResetCamera}>
           <Reset isReset={isReset}/>
         </div>
-        <div className="controls">
-          {selectedPoint && (
-            <div className="selected-point">
+        {selectedPoint && 
+          <div className="controls">
               Pipe Section ID: <strong>{selectedPoint.pipeSectionId}</strong> <br/>
               Circumference ID: <strong>{selectedPoint.circumferenceId}</strong> <br/>
               Thickness: <strong>{selectedPoint.pipeThickness} mm</strong>
-            </div>
-          )}
-        </div>
+          </div>
+        }
+        
         <Legend onReset={handleReset} />
       </div>
 
-      <div className='chart-container'>
-        <div className="chart-section row">
+      <div className='chart-container ms-5'>
+        <div className="row ">
             {/* <BarChart /> */}
-            <div className='col-md-6 mb-3'>
+            <div className='col-md-6 chart-section'>
               <Histogram />
             </div>
-            <div className='col-md-6' > 
+            <div className='col-md-6 chart-section' > 
               {/* <Histogram /> */}
              <HeatMap onCorrelationCalc={handlePipeDataUpdate}/> 
              <Heatmap width={500} height={300} newPipeData={newPipeData}/>

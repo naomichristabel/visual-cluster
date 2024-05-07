@@ -3,7 +3,8 @@ import React, { useEffect, useRef } from "react";
 import { useLoader } from "react-three-fiber";
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import * as THREE from 'three';
-import { PIPE_CONSTANTS } from "../../utils/Contants.js";
+import { COLOURS, PIPE_CONSTANTS } from "../../utils/Contants.js";
+
 
 const drawCircle = (centerX,centerY,radius,segments) => {
 
@@ -57,7 +58,8 @@ const Cylinder = ({ height }) => {
     
       <mesh ref={myref}>
         <primitive attach="geometry" object={geometry} />
-        <meshStandardMaterial attach="material" transparent opacity={0.5} map={colorMap} />
+        <meshStandardMaterial attach="material" color={COLOURS.mediumGrey} transparent={false} opacity={1} map={colorMap} />
+        {/* <meshStandardMaterial attach="material" transparent opacity={0.5} map={colorMap} /> */}
       </mesh>
     
   );

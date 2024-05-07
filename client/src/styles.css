@@ -42,6 +42,7 @@ body {
   color: #fff;
   width: 200px;
   border-radius: 16px;
+  font-size: 14px;
 }
 
 .controls > button,
@@ -68,11 +69,6 @@ body {
   color: #ff0;
 }
 
-.selected-point {
-  font-size: 14px;
-  margin-top: 16px;
-}
-
 .cylinder {
   display: flex;
   justify-content: center;
@@ -89,7 +85,7 @@ body {
 
 .chart-container {
   padding: 10px;
-  margin: 10px;
+  /* margin-left: 30px !important; */
 }
 
 .chart-section {
@@ -98,7 +94,7 @@ body {
   border: solid 1px rgb(74, 74, 74);
   padding: 16px;
   /* margin-top: 10px; */
-  margin-left: 30px !important;
+  /* margin-left: 30px !important; */
   /* width: 30%; */
   margin-bottom: 2%;
   color: #fff;
@@ -135,7 +131,7 @@ body {
   border: solid 1px rgb(74, 74, 74);
   padding: 16px;
   /* margin-top: 10px; */
-  margin-left: 30px !important;
+  /* margin-left: 30px !important; */
   /* width: 70%; */
   margin-bottom: 2%;
 }
@@ -183,7 +179,7 @@ body {
   bottom: 16px;
   z-index: 1;
   padding: 0px 5px;
-  background: #141414;
+  background: rgba(20, 20, 20, 0.8);
   color: #fff;
   border: none;
   text-transform: uppercase;
@@ -225,9 +221,3 @@ dl dt.yellow{
 dl dt.green{
   background: #04dc04;
 }
-
-.trend-container {
-  /* color: #000;
-  background-color: #9a9a9a; */
-}
-

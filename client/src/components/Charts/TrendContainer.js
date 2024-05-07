@@ -21,7 +21,7 @@ const TrendContainer = ({ title }) => {
       </select>
     }
 
-      <div className="row trend-container">
+      <div className="row">
           {/* <div className="col">
             <LinePlot direction={LABEL.direction.n} pipeThicknessValues={[18.7, 19.1, 18.6, 18.8, 18.9, 19.5]} pipeSections={[1, 2, 3, 4, 5, 6]} />
           </div> */}
@@ -33,7 +33,7 @@ const TrendContainer = ({ title }) => {
           </div>
         </div>
 
-        <div className="row">
+        <div className="row my-5">
         <div className="col">
             <TrendPlot direction={LABEL.direction.w} />
           </div>

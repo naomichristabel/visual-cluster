@@ -25,10 +25,10 @@ const TrendPlot = ({ direction }) => {
                 ],
                 x: { label: "Pipe Section", labelAnchor: "center", labelOffset: 30 },
                 y: { label: "Pipe Thickness (mm)", labelAnchor: "center", labelOffset: 40 },
-                marginTop: 20,
-                marginBottom: 20,
-                marginLeft: 20,
-                marginRight: 20,
+                // marginTop: 20,
+                // marginBottom: 20,
+                // marginLeft: 20,
+                // marginRight: 20,
             });
 
             plotRef.current.append(linePlot);
