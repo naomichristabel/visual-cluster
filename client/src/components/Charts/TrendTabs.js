@@ -12,20 +12,21 @@ const TrendTabs = () => {
   return (
     <>
       <div className='title'>
-          <h4>{LABEL.trendTitle}</h4>
+          {activeTab === 1 && <h4>{LABEL.currentTrendTitle}</h4>}
+          {activeTab === 2 && <h4>{LABEL.upcomingTrendTitle}</h4>}
       </div>
 
       <div className="container">
       <ul className="nav nav-pills justify-content-center mt-3">
 
-      <li className="nav-item">
+      {/* <li className="nav-item">
           <button
             className={`nav-link btn ${activeTab === 0 ? "active" : ""}`}
             onClick={() => handleTabClick(0)}
           >
             {LABEL.trendTabs.past}
           </button>
-        </li>
+        </li> */}
 
         <li className="nav-item">
           <button

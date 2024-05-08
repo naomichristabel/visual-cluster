@@ -27,6 +27,9 @@ function calculateThresholds(data) {
   const stdev = d3.deviation(data);
   const h = 3.5 * stdev * Math.pow(n, -1 / 3);
   const bins = Math.ceil(range / h);
+
+  //console.log('Number of bins / thresholds: ',bins)
+
   return bins;
 }
 

@@ -61,18 +61,20 @@ function gridLayout(data) {
       datum.x = (parseInt(data[i].pipeSectionId) - minValue) / PIPE_CONSTANTS.pipeSectionScaleFactor
       //datum.x = scaledNumbers[i + 1];
       //datum.y = randomNumbers[i];
-      //datum.y = 0;
+      
+      //Uncomment for pipe with points only along X-axis
+        // datum.y = 0;
+        // datum.z = PIPE_CONSTANTS.pipeOuterRadius;
 
       var circumferenceId = (parseInt(data[i].circumferenceId) - minValueCircumference) / PIPE_CONSTANTS.circumferenceScaleFactor ;
-
-      var { y, z } = calculateCircumferencePointCoordinates(circumferenceId, 5, PIPE_CONSTANTS.pipeOuterRadius);
-      datum.y = y;
-      datum.z = z;
+      
+      //Uncomment for pipe with circumference IDs
+        var { y, z } = calculateCircumferencePointCoordinates(circumferenceId, 5, PIPE_CONSTANTS.pipeOuterRadius);
+        datum.y = y;
+        datum.z = z;
 
       //datum.x = (col * 1.05);
       //datum.y = row * 1.05;
-      
-      //datum.z = PIPE_CONSTANTS.pipeOuterRadius;
 
       //console.log('co ordinates (x,y,z): ', datum.x, datum.y, datum.z)
     }

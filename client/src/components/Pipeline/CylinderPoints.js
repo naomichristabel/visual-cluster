@@ -64,7 +64,7 @@ const usePointColors = ({ data, selectedPoint, selectedPoints }) => {
         scratchColor.set(pointColor);
         scratchColor.toArray(colorArray, i * 3);
       }
-    } else if(selectedPoints?.length > 0 && selectedPoint?.pipeSectionId) {
+    } else if(selectedPoints?.length > 0 && selectedPoint?.pipeSectionId) { //MULTIPLE POINTS + SINGLE POINT SELECTED
       
       for (let i = 0; i < data?.length; ++i) {
         const point = data[i];

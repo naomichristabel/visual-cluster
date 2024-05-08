@@ -2,9 +2,11 @@ export const PIPE_CONSTANTS = {
     pipeOuterRadius: 10,
     pipeInnerRadius: 9,
     minAcceptableThreshold: 18.96,
-    pipeSectionScaleFactor: 2,
-    circumferenceScaleFactor: 10,
+    pipeSectionScaleFactor: 2, // Needs to be calculated or set based on spacing between Pipe Dection IDs
+    circumferenceScaleFactor: 10, // Needs to be calculated or set based on spacing between Circumference IDs
 }
+
+// pipeSectionScaleFactor = 2 for with circumference IDs file, 12 for points only along X-axis
 
 export const COLOURS = {
     amber: '#FF5733',
@@ -19,7 +21,8 @@ export const COLOURS = {
 }
 
 export const LABEL = {
-    trendTitle: 'Thickness Trend',
+    currentTrendTitle: 'Trend Analysis',
+    upcomingTrendTitle: 'Predictive Trend Analysis',
     trendTabs: {
         past: "Past",
         current: "Current",
