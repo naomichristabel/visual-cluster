@@ -9,19 +9,23 @@ body {
 }
 
 .App {
-  width: 1200px;
+  /* width: 1200px; */
   height: 300px;
   position: relative;
-  padding: 16px;
-  margin-left: 50px;
+  /* padding: 16px; */
+  margin: 0px 50px 50px 50px;
   box-sizing: border-box;
+  border: solid 1px rgb(74, 74, 74);
+  border-radius: 5px;
 }
 
 .title {
-  color: #fff;
-  text-align: center;
   text-transform: uppercase;
-  padding: 5px;
+  font-size: 22px;
+  font-weight: bolder;
+  padding: 10px;
+  margin-left: 2%;
+  padding-top: 2%;
 }
 
 .vis-container {
@@ -31,7 +35,8 @@ body {
   right: 0;
   bottom: 0;
   border: solid 1px rgb(74, 74, 74);
-  width: 1170px;
+  border-radius: 5px;
+  width: 100%;
 }
 
 .controls {
@@ -172,29 +177,61 @@ body {
   opacity: 0.65;
 }
 
-
-.pipe-legend {
+.icons-container {
   position: absolute;
   right: 46px;
   bottom: 16px;
   z-index: 1;
   padding: 0px 5px;
-  background: rgba(20, 20, 20, 0.8);
-  color: #fff;
-  border: none;
+}
+
+.single-icon:hover {
+  background-color: "#1b2351";
+  opacity: 0.8;
+}
+
+.callout-container {
+  position: relative;
+}
+
+.callout-arrow {
+  position: absolute;
+  bottom: -7px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(150%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #fff; /* Adjust color as needed */
+}
+
+.pipe-legend {
+  position: absolute;
+  right: 30px;
+  bottom: 56px;
+  z-index: 1;
+  padding: 0px 5px;
+  background: rgba(255, 255, 255);
+  color: #000000;
+  border: solid 1px #fff;
+  border-radius: 3px;
   text-transform: uppercase;
   font-size: 8px;
   text-align: center;
 }
 
 .pipe-legend .form-group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  text-align: left; 
 }
 
 .pipe-legend p {
   margin-top: 5px;
+}
+
+.pipe-legend span {
+  font-size: 8px;
+  text-transform: none;
 }
 
 dl dt{

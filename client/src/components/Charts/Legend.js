@@ -33,42 +33,55 @@ const Legend = (props) => {
       }, [pipeCtx?.selectedOptions])
 
       React.useEffect(() => {
-        if(isReset) 
+        if(isReset || props.isReset) 
             setCheckedOptions(prev => ({ ...prev, a: false, b: false, c: false, d: false }));
-      }, [isReset]);
+      }, [isReset, props.isReset]);
 
-  return (
-    <div className='pipe-legend'>
-        <span>{`Minimum Acceptable Threshold (MAT): ${PIPE_CONSTANTS.minAcceptableThreshold} mm`}</span>
- 
-         <FormGroup row className="form-group">
-            <FormControlLabel
-               label={`< MAT`}
-               control={ <Checkbox id='a' checked={isReset ? !isReset : checkedOptions['a']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.red }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" /> }
-               sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.red, fontSize: '8px' } }}
-               onChange={(event) => handleChecked(event.target)}
-            />
-            <FormControlLabel
-               label={`< 5% of MAT`}
-               control={ <Checkbox id='b' checked={isReset ? !isReset : checkedOptions['b']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.amber }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" /> }
-               sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.amber, fontSize: '8px' } }}
-               onChange={(event) => handleChecked(event.target)}
-            />
-            <FormControlLabel
-               label={`5% to 10% of MAT`}
-               control={ <Checkbox id='c' checked={isReset ? !isReset : checkedOptions['c']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.yellow }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" /> }
-               sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.yellow, fontSize: '8px' } }}
-               onChange={(event) => handleChecked(event.target)}
-            />
-            <FormControlLabel
-               label={`> 10% of MAT`}
-               control={ <Checkbox id='d' checked={isReset ? !isReset : checkedOptions['d']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.green }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" /> }
-               sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.green, fontSize: '8px' } }}
-               onChange={(event) => handleChecked(event.target)}
-            />
-         </FormGroup>
-    </div>
-  )
-}
+      return (
+        <div className='pipe-legend callout-container'>
+           <div className="callout-arrow"></div>
+
+            <span>{`Minimum Acceptable Threshold (MAT): ${PIPE_CONSTANTS.minAcceptableThreshold} mm`}</span>
+     
+            <div className="row" style={{ marginBottom: '-10px' }}>
+                <FormGroup className="form-group col-md-6">
+                    <FormControlLabel
+                        label={`< MAT`}
+                        control={<Checkbox id='a' checked={isReset ? !isReset : checkedOptions['a']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.red }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" />}
+                        sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto' } }}
+                        onChange={(event) => handleChecked(event.target)}
+                    />
+                </FormGroup>
+                <FormGroup className="form-group col-md-6">
+                    <FormControlLabel
+                        label={`< 5% of MAT`}
+                        control={<Checkbox id='b' checked={isReset ? !isReset : checkedOptions['b']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.amber }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" />}
+                        sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto' } }}
+                        onChange={(event) => handleChecked(event.target)} 
+                    />
+                </FormGroup>
+            </div>
+    
+            <div className="row">
+                <FormGroup className="form-group col-md-6">
+                    <FormControlLabel
+                        label={`5% to 10% of MAT`}
+                        control={<Checkbox id='c' checked={isReset ? !isReset : checkedOptions['c']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.yellow }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" />}
+                        sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto' } }}
+                        onChange={(event) => handleChecked(event.target)}
+                    />
+                </FormGroup>
+                <FormGroup className="form-group col-md-6">
+                    <FormControlLabel
+                        label={`> 10% of MAT`}
+                        control={<Checkbox id='d' checked={isReset ? !isReset : checkedOptions['d']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.green }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" />}
+                        sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto' } }}
+                        onChange={(event) => handleChecked(event.target)}
+                    />
+                </FormGroup>
+            </div>
+        </div>
+    )
+  }
 
 export default Legend

@@ -28,7 +28,7 @@ let DOT_COLOR = '';
 // re-use for instance computations
 const scratchColor = new THREE.Color();
 
-const usePointColors = ({ data, selectedPoint, selectedPoints }) => {
+const usePointColors = ({ data, selectedPoint, selectedPoints, lowestThicknessPoint }) => {
   const numPoints = data?.length;
   const colorAttrib = React.useRef();
   const colorArray = React.useMemo(() => new Float32Array(numPoints * 3), [
@@ -38,10 +38,15 @@ const usePointColors = ({ data, selectedPoint, selectedPoints }) => {
   React.useEffect(() => {
 // console.log('selectedPoints',selectedPoints)
 // console.log('selectedPoint',selectedPoint)
+    
     if(selectedPoints?.length > 0  && !selectedPoint?.pipeSectionId) {  //MULTIPLE POINTS
       for (let i = 0; i < data?.length; ++i) {
         const point = data[i];
         let pointColor = COLOURS.grey;
+
+        if(data[i] === (data[lowestThicknessPoint.index])){
+          pointColor = COLOURS.blue;
+        }
   
         // Check if the point matches any of the selected points
         const isSelected = selectedPoints.some(selPoint => {
@@ -69,6 +74,10 @@ const usePointColors = ({ data, selectedPoint, selectedPoints }) => {
       for (let i = 0; i < data?.length; ++i) {
         const point = data[i];
         let pointColor = COLOURS.grey;
+        
+        if(data[i] === (data[lowestThicknessPoint.index])){
+          pointColor = COLOURS.blue;
+        }
       
         // Check if the point matches any of the selected points
         const isSelected = selectedPoints.some(selPoint => {
@@ -116,18 +125,18 @@ const usePointColors = ({ data, selectedPoint, selectedPoints }) => {
     } else if (selectedPoint?.pipeThickness > ((0.10 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
       DOT_COLOR = COLOURS.green
     }
-  
+
     for (let i = 0; i < data?.length; ++i) {
-      scratchColor.set(
-        data[i] === (selectedPoint) ? DOT_COLOR : COLOURS.grey
-      );
-      scratchColor.toArray(colorArray, i * 3);
-    }
+        scratchColor.set(
+          data[i] === (selectedPoint) ? DOT_COLOR : data[i] === (data[lowestThicknessPoint?.index]) ? COLOURS.blue : COLOURS.grey
+        );
+        scratchColor.toArray(colorArray, i * 3);
+      }
 
 }
 
     colorAttrib.current.needsUpdate = true;
-  }, [data, selectedPoint, selectedPoints, colorArray]);
+  }, [data, selectedPoint, selectedPoints, colorArray, lowestThicknessPoint]);
 
   return { colorAttrib, colorArray };
 };
@@ -191,6 +200,8 @@ const CylinderPoints = ({ data, layout, selectedPoints, selectedPoint, onSelectP
   const meshRef = React.useRef();
   const numPoints = data?.length;
 
+  const [lowestThicknessPoint, setLowestThicknessPoint] = React.useState();
+
   const pipeCtx = React.useContext(DataContext);
 
   // run the layout, animating on change
@@ -208,13 +219,18 @@ const CylinderPoints = ({ data, layout, selectedPoints, selectedPoint, onSelectP
     updateInstancedMeshMatrices({ mesh: meshRef.current, data });
   }, [data, layout]);
 
+  // Locate the point of lowest thickness
+  React.useEffect(() => {
+    setLowestThicknessPoint(JSON.parse(localStorage.getItem('lowestThickness')))
+  }, [localStorage.getItem('lowestThickness')])
+
   const { handleClick, handlePointerDown, handleHover } = useMousePointInteraction({
     data,
     selectedPoint,
     onSelectPoint,
   });
 
-  const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, selectedPoints });
+  const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, selectedPoints, lowestThicknessPoint });
  
    return (
     <>

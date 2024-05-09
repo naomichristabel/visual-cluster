@@ -28,10 +28,20 @@ export const DataContextProvider = (props) => {
 
     const fetchData = async () => {
         try {
+          // const response = await fetch('./Sebastian/332001_c11_c21_ct2_ct3_complete.csv_df_plot.json');
           const response = await fetch('./pipeData.json');
           const jsonData = await response.json();
-        //   console.log('data',jsonData)
+          console.log('data',jsonData)
           setPipeData(jsonData);
+          // const mappedData = jsonData.map(item => ({
+          //   pipeThickness: item["Thickness values"],
+          //   pipeSectionId: item["Pipe Section"],
+          //   circumferenceId: item["Circumference"],
+          //   count: item["count"],
+          //   countPercent: item["% Occurence"]
+          // }));
+
+          // setPipeData(mappedData);
         } catch (error) {
           console.error('Error fetching data:', error);
         }

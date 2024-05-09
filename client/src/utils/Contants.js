@@ -18,6 +18,9 @@ export const COLOURS = {
     yellow: '#FFFF00',
     purple: '#9c27b0',
     white: '#FFF',
+    darkBlue: '#1b2351',
+    black: '#000',
+    blue: '#0000FF'
 }
 
 export const LABEL = {

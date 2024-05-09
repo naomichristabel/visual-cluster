@@ -29,7 +29,7 @@ const Controls = ({}, ref) => {
     resetCamera: () => {
       // reset look-at (target) and camera position
       controls.current.target.set(0, 0, 0);
-      camera.position.set(0, 0, 30);
+      camera.position.set(0, 0, 50);
 
       // needed for trackball controls, reset the up vector
       camera.up.set(

@@ -1,12 +1,12 @@
 import React from 'react'
+import { COLOURS } from '../../utils/Contants';
 
 const Header = () => {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-primary">
+      <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: COLOURS.darkBlue}}>
         <div className="container">
           <a className="navbar-brand" href="/">
-            {/* <img src={logo} alt="Logo" width="30" height="30" className="d-inline-block align-top" /> */}
-                PAYODA / FIRST GENESIS
+            <img src='./assets/logo.png' alt="Logo" className="d-inline-block align-top" />
           </a>
         </div>
       </nav>
