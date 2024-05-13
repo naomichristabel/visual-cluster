@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/naomichristabel/visual-cluster/tree/master/client/static/css/main.3d012672.css",
-    "main.js": "/naomichristabel/visual-cluster/tree/master/client/static/js/main.efd3a10a.js",
-    "static/media/bootstrap-icons.woff?": "/naomichristabel/visual-cluster/tree/master/client/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
-    "static/media/bootstrap-icons.woff2?": "/naomichristabel/visual-cluster/tree/master/client/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
-    "index.html": "/naomichristabel/visual-cluster/tree/master/client/index.html",
-    "main.3d012672.css.map": "/naomichristabel/visual-cluster/tree/master/client/static/css/main.3d012672.css.map",
-    "main.efd3a10a.js.map": "/naomichristabel/visual-cluster/tree/master/client/static/js/main.efd3a10a.js.map"
+    "main.css": "/naomichristabel/visual-cluster/client/static/css/main.17367c4a.css",
+    "main.js": "/naomichristabel/visual-cluster/client/static/js/main.97ad8f31.js",
+    "static/media/bootstrap-icons.woff?": "/naomichristabel/visual-cluster/client/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/naomichristabel/visual-cluster/client/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "index.html": "/naomichristabel/visual-cluster/client/index.html",
+    "main.17367c4a.css.map": "/naomichristabel/visual-cluster/client/static/css/main.17367c4a.css.map",
+    "main.97ad8f31.js.map": "/naomichristabel/visual-cluster/client/static/js/main.97ad8f31.js.map"
   },
   "entrypoints": [
-    "static/css/main.3d012672.css",
-    "static/js/main.efd3a10a.js"
+    "static/css/main.17367c4a.css",
+    "static/js/main.97ad8f31.js"
   ]
 }
