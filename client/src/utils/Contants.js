@@ -2,8 +2,8 @@ export const PIPE_CONSTANTS = {
     pipeOuterRadius: 10,
     pipeInnerRadius: 9,
     minAcceptableThreshold: 18.96,
-    pipeSectionScaleFactor: 2, // Needs to be calculated or set based on spacing between Pipe Dection IDs
-    circumferenceScaleFactor: 10, // Needs to be calculated or set based on spacing between Circumference IDs
+    pipeSectionScaleFactor: 1, // Needs to be calculated or set based on spacing between Pipe Section IDs
+    circumferenceScaleFactor: 2, // Needs to be calculated or set based on spacing between Circumference IDs
 }
 
 // pipeSectionScaleFactor = 2 for with circumference IDs file, 12 for points only along X-axis
@@ -14,6 +14,8 @@ export const COLOURS = {
     grey: '#888',
     mediumGrey: '#6F6F6F',
     darkGrey: '#292929',
+    lightGrey: '#DDD',
+    veryLightGrey: "#EEE",
     red: '#FF0000',
     yellow: '#FFFF00',
     purple: '#9c27b0',
@@ -35,7 +37,11 @@ export const LABEL = {
         n: "North",
         s: "South",
         e: "East",
-        w: "West"
+        w: "West",
+        nw: "North-West",
+        sw: "South-West",
+        ne: "North-East",
+        se: "South-East"
     }
 }
 
@@ -52,20 +58,21 @@ export const COLOR_LEGEND_HEIGHT = 60;
 export const COLORS = [
     "#ff0000", // Red
     "#f05336", // Orange
-    "#e29421", // Tangerine
-    "#FFEEA6", // Light Yellow
+    // "#e29421", // Tangerine
+    // "#FFEEA6", // Light Yellow
     "#ffd73e", // Yellow
-    "#FFEF00", // Bright Yellow
-    "#DAFA59", // Yellow Green
+    // "#FFEF00", // Bright Yellow
+    // "#DAFA59", // Yellow Green
     "#C7FF72", // Light Green
-    "#33D228", // Green
+    // "#33D228", // Green
     "#4ab04a", // Medium Green
     "#1D8B15", // Dark Green
 ];
 
 export const THRESHOLDS = [
+    0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0
     //0, 0.01, 0.02, 0.03, 0.09, 0.1, 0.15, 0.25, 0.4, 0.5, 1
 // 16,16.5,17,17.5,18,18.5,19,19.5,20,20.5,21,21.5,22,22.5,23
--1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1
+// -1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1
 //-0.50, -0.45, -0.40, -0.35, -0.30, -0.25, -0.20, -0.15, -0.10, -0.05, 0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50
 ];

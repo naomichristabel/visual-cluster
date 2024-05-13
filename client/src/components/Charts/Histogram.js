@@ -20,6 +20,30 @@ function epanechnikovKernel(scale) {
     };
 }
 
+// Calculate statistical measures for the distribution curve chart
+function calculateMeasures(kdeData) {
+    // Calculate minimum, maximum, average, and standard deviation for the distribution curve
+  //const kdeData = kde.map(d => d[1]); // Extracting the KDE values
+  const minKDE = Math.min(...kdeData);
+  const maxKDE = Math.max(...kdeData);
+  const sumKDE = kdeData.reduce((acc, val) => acc + val, 0);
+  const averageKDE = sumKDE / kdeData.length;
+  const varianceKDE = kdeData.reduce((acc, val) => acc + (val - averageKDE) ** 2, 0) / kdeData.length;
+  const stdDevKDE = Math.sqrt(varianceKDE);
+
+  // console.log("Minimum KDE:", minKDE);
+  // console.log("Maximum KDE:", maxKDE);
+  // console.log("Average KDE:", averageKDE);
+  // console.log("Standard Deviation KDE:", stdDevKDE);
+
+  return {
+    min: minKDE.toFixed(3),
+    max: maxKDE.toFixed(3),
+    average: averageKDE.toFixed(3),
+    stdDev: stdDevKDE.toFixed(3)
+  }
+}
+
 //Scott's normal reference rule for determining the number of bins
 function calculateThresholds(data) {
   const n = data.length;
@@ -36,6 +60,8 @@ function calculateThresholds(data) {
 
 const Histogram = () => {
     const chartRef = useRef();
+
+    const [measures, setMeasures] = useState({ min: null, max: null, average: null, stdDev: null });
 
     const pipeCtx = useContext(DataContext)
 
@@ -63,10 +89,13 @@ if(pipeCtx?.pipeData?.length > 0) {
      // Kernel density estimation
      const kde = kernelDensityEstimator(epanechnikovKernel(2), Array.from({length: 200}, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200)))(pipeCtx?.pipeData.map(d => d.pipeThickness));
 
+     setMeasures(calculateMeasures(pipeCtx?.pipeData.map(d => d.pipeThickness)));
+
     const binChart = Plot.plot({
         marks: [
-          Plot.frame({ fill: COLOURS.darkGrey }),
-          Plot.gridY({stroke: COLOURS.grey, strokeOpacity: 1}),
+          Plot.frame({ fill: COLOURS.white }),
+          Plot.gridX({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
+          Plot.gridY({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
           Plot.rectY(
             pipeCtx?.pipeData,
             Plot.binX(
@@ -75,18 +104,19 @@ if(pipeCtx?.pipeData?.length > 0) {
                 x: "pipeThickness", 
                 fill: color,
                 thresholds: calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)) > 5 ? 10 : calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)), // Adjust the number of thresholds for finer intervals
-                title: d => `Pipe Thickness: ${d.pipeThickness}` // Tooltip title showing pipeThickness value
+                title: d => `Pipe Thickness: ${d.pipeThickness} mm` // Tooltip title showing pipeThickness value
               },
             )
           ),
-          Plot.line(kde, { stroke: COLOURS.white, strokeWidth: 2 }),
+          Plot.line(kde, { stroke: COLOURS.white, strokeWidth: 1 }),
+          Plot.line(kde, { stroke: COLOURS.lightGrey, strokeWidth: 2 }),
           Plot.ruleY([0]),
         ],
         x: { label: "Pipe Thickness (mm)", domain: xDomain, labelAnchor: "center", labelOffset: 30 },
         y: { label: "Count (%)", grid: true, labelAnchor: "center", labelOffset: 40, tickFormat: ".0%" },
         // Enable tooltips
         marksTooltip: true,
-        
+        height: 300, // Set the desired height here
       });
       
       chartRef.current.append(binChart);
@@ -99,9 +129,34 @@ if(pipeCtx?.pipeData?.length > 0) {
 
   return (
     <div>
-    <h4>Histogram with Distribution Curve Chart</h4>
-    <div ref={chartRef} />
-  </div>
+      <div className='title'>
+        <h5>Histogram with distribution curve chart</h5>
+      </div>
+      
+      <div ref={chartRef} />
+
+      <div className='title measures'>
+        <span>{`Min: ${measures.min} - Max: ${measures.max} - Avg: ${measures.average} - Std. Dev: ${measures.stdDev}`}</span>
+      </div>
+
+      <div className="histogram-legend">
+          <div className="histogram-legend-title">Minimum Acceptable Threshold (MAT): <br/> 18.96mm</div>
+          <div className="histogram-legend-items">
+            <div className="histogram-legend-item">
+              <div className="histogram-legend-box" style={{ background: "purple" }}></div>
+              <div className="histogram-legend-label">&lt; 3% of MAT</div>
+            </div>
+            <div className="histogram-legend-item">
+              <div className="histogram-legend-box" style={{ background: "red" }}></div>
+              <div className="histogram-legend-label">3% to 5% of MAT</div>
+            </div>
+            <div className="histogram-legend-item">
+              <div className="histogram-legend-box" style={{ background: "yellow" }}></div>
+              <div className="histogram-legend-label">5% to 10% of MAT</div>
+            </div>
+          </div>
+        </div>
+      </div>
   )
 }
 

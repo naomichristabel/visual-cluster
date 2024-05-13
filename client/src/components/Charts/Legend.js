@@ -54,9 +54,9 @@ const Legend = (props) => {
                 </FormGroup>
                 <FormGroup className="form-group col-md-6">
                     <FormControlLabel
-                        label={`< 5% of MAT`}
+                        label={`> MAT to < 5% of MAT`}
                         control={<Checkbox id='b' checked={isReset ? !isReset : checkedOptions['b']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.amber }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" />}
-                        sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto' } }}
+                        sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto', marginRight: '20px' } }}
                         onChange={(event) => handleChecked(event.target)} 
                     />
                 </FormGroup>
@@ -65,19 +65,19 @@ const Legend = (props) => {
             <div className="row">
                 <FormGroup className="form-group col-md-6">
                     <FormControlLabel
-                        label={`5% to 10% of MAT`}
+                        label={`> 5% of MAT to 10% of MAT`}
                         control={<Checkbox id='c' checked={isReset ? !isReset : checkedOptions['c']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.yellow }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" />}
                         sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto' } }}
                         onChange={(event) => handleChecked(event.target)}
                     />
                 </FormGroup>
                 <FormGroup className="form-group col-md-6">
-                    <FormControlLabel
+                    {/* <FormControlLabel
                         label={`> 10% of MAT`}
                         control={<Checkbox id='d' checked={isReset ? !isReset : checkedOptions['d']} sx={{ "& .MuiSvgIcon-root": { fill: COLOURS.green }, '& .MuiIconButton-root': { padding: '6px' } }} size="small" />}
                         sx={{ '& .MuiFormControlLabel-label': { color: COLOURS.black, fontSize: '6px', fontWeight: 'bold', whiteSpace: 'nowrap', width: 'auto' } }}
                         onChange={(event) => handleChecked(event.target)}
-                    />
+                    /> */}
                 </FormGroup>
             </div>
         </div>

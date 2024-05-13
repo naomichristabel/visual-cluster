@@ -1,6 +1,6 @@
 import styles from "./tooltip.module.css";
 
-export const Tooltip = ({ interactionData, width, height }) => {
+export const Tooltip = ({ interactionData, width, height, colorScale }) => {
   if (!interactionData) {
     return null;
   }
@@ -30,9 +30,10 @@ export const Tooltip = ({ interactionData, width, height }) => {
         <br />
         <b>Circumference ID: </b><span>{interactionData.yLabel}</span>
         <br />
-        <b>Pipe Thickness (mm): </b><span>{interactionData.value}</span>
+        <b>Pipe Thickness: </b><span style={interactionData.dist && { color: colorScale(interactionData.dist), fontWeight: 'bolder', textShadow: `-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000,0.5px 0.5px 0 #000` }}>{interactionData.value} mm</span>
         <br />
-        <b>Correlation: </b><span>{interactionData.corr}</span>
+        {interactionData.dist && <><b>Distance Measure: </b><span>{interactionData.dist} mm</span></>}
+
       </div>
     </div>
   );

@@ -29,19 +29,45 @@ export const DataContextProvider = (props) => {
     const fetchData = async () => {
         try {
           // const response = await fetch('./Sebastian/332001_c11_c21_ct2_ct3_complete.csv_df_plot.json');
-          const response = await fetch('./pipeData.json');
+          const response = await fetch('./Sebastian/332001_c11_c21_ct2_ct3_complete.csv_df_plot_array.json');
+          //const response = await fetch('./pipeData.json');
           const jsonData = await response.json();
-          console.log('data',jsonData)
-          setPipeData(jsonData);
-          // const mappedData = jsonData.map(item => ({
-          //   pipeThickness: item["Thickness values"],
-          //   pipeSectionId: item["Pipe Section"],
-          //   circumferenceId: item["Circumference"],
-          //   count: item["count"],
-          //   countPercent: item["% Occurence"]
-          // }));
+          //console.log('data',jsonData)
+          //setPipeData(jsonData);
 
-          // setPipeData(mappedData);
+          const mappedData = [];
+
+          jsonData.forEach(item => {
+              const circumferenceValues = item["Circumference"].split(',');
+
+              // If the Circumference contains a comma
+              if (circumferenceValues.length > 1) {
+                  circumferenceValues.forEach(circumference => {
+                      const newItem = { ...item }; // Create a copy of the original object
+
+                      // Replace the Circumference value with the split value
+                      newItem["Circumference"] = circumference.trim(); // Remove leading/trailing spaces if any
+
+                      // Add the modified object to the mappedData array
+                      mappedData.push(newItem);
+                  });
+              } else {
+                  // If no comma is found, simply add the original item to the mappedData array
+                  mappedData.push(item);
+              }
+          });
+          
+          const newMappedData = mappedData.map(item => ({
+            pipeThickness: item["Thickness values"],
+            pipeSectionId: item["Pipe Section"],
+            circumferenceId: item["Circumference"],
+            count: item["count"],
+            countPercent: item["% Occurence"]
+          }));
+
+          setPipeData(newMappedData);
+
+          //console.log('new mapped data, splitting circumference IDS', newMappedData)
         } catch (error) {
           console.error('Error fetching data:', error);
         }

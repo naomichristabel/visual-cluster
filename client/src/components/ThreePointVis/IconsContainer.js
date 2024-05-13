@@ -5,8 +5,16 @@ import { COLOURS } from '../../utils/Contants'
 
 const IconsContainer = (props) => {
     const [showCheckboxes, setShowCheckboxes] = useState(false);
-
+    
     const pipeCtx = React.useContext(DataContext)
+
+    const handleOpenInfo = () => {
+        props.onOpenInfo();
+    }
+
+    const handleTogglePlanes = () => {
+        props.onToggle()
+    }
 
     const handleDeselectAll = () => {
         pipeCtx.setSelectedOptionsHandler([]);
@@ -21,7 +29,7 @@ const IconsContainer = (props) => {
     }
 
     useEffect( ()=>{
-        console.log('show / hide', showCheckboxes)
+        //console.log('show / hide', showCheckboxes)
         props.toggleCheckboxesHandler(showCheckboxes);
     },[showCheckboxes])
 
@@ -32,14 +40,20 @@ const IconsContainer = (props) => {
       }, [props?.isReset]);
 
   return (
-    <div className="icons-container row" style={{color: COLOURS.white}}>
-        <div className='col-md-4 single-icon'>
-            <i class="bi bi-info-circle h4"></i>
+    <div className="icons-container row" style={{color: COLOURS.white, width: '500px', marginRight: '-12%'}}>
+        <div className='col-md-2 single-icon'>
+            <img src="./assets/icons/strongest-decline.svg" width={32} height={32} alt="Strongest Decline Icon" />
         </div>
-        <div className='col-md-4 single-icon' onClick={handleShowCheckboxes}>
-            <i class="bi bi-stack h4"></i>
+        <div className='col-md-2 single-icon' onClick={handleTogglePlanes}>
+            <img src="./assets/icons/planes.svg" width={32} height={32} alt="Planes Icon" />
         </div>
-        <div className='col-md-4 single-icon' onClick={handleReset}>
+        <div className='col-md-2 single-icon' onClick={handleOpenInfo}>
+            <i className="bi bi-info-circle h4"></i>
+        </div>
+        <div className='col-md-2 single-icon' onClick={handleShowCheckboxes}>
+            <i className="bi bi-stack h4"></i>
+        </div>
+        <div className='col-md-2 single-icon' onClick={handleReset}>
             <i className="bi bi-arrow-counterclockwise h4"></i>
         </div>
     </div>

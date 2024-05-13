@@ -48,8 +48,11 @@ function gridLayout(data) {
   // Find minimum and maximum values
   const minValueCircumference = Math.min(...circumferenceIds);
 
+  //console.log('circumferenceIds',circumferenceIds)
+
   // Find number of circumference IDs
-  const noOfCircumferenceIds = data?.filter(d => d.pipeSectionId === data[0].pipeSectionId)?.map(d => d.circumferenceId)?.length;
+  // const noOfCircumferenceIds = data?.filter(d => d.pipeSectionId === data[0].pipeSectionId)?.map(d => d.circumferenceId)?.length;
+  const noOfCircumferenceIds = data?.map(d => d.circumferenceId)?.length;
 
   const minValue = Math.min(...pipeSectionIds);
   const maxValue = Math.max(...pipeSectionIds);
@@ -59,7 +62,8 @@ function gridLayout(data) {
   const indexOfLowestThicknessVal = pipeThicknessValues.findIndex(val => val === Math.min(...pipeThicknessValues))
 
   const pipeSectionIdOfLowestThicknessVal = parseInt(data[indexOfLowestThicknessVal]?.pipeSectionId)
-  const scaledCircumferenceIdOfLowestThicknessVal = (parseInt(data[indexOfLowestThicknessVal].circumferenceId) - minValueCircumference) / PIPE_CONSTANTS.circumferenceScaleFactor;
+  const circumferenceIdOfLowestThicknessVal = parseInt(data[indexOfLowestThicknessVal]?.circumferenceId)
+  const scaledCircumferenceIdOfLowestThicknessVal = (circumferenceIdOfLowestThicknessVal - minValueCircumference) / PIPE_CONSTANTS.circumferenceScaleFactor;
 
   const yzLowestThicknessVal = calculateCircumferencePointCoordinates(scaledCircumferenceIdOfLowestThicknessVal, noOfCircumferenceIds, PIPE_CONSTANTS.pipeOuterRadius);
 
@@ -68,12 +72,15 @@ function gridLayout(data) {
     index: indexOfLowestThicknessVal,
     x: (pipeSectionIdOfLowestThicknessVal - minValue) / PIPE_CONSTANTS.pipeSectionScaleFactor,
     y: yzLowestThicknessVal.y,
-    z: yzLowestThicknessVal.z
+    z: yzLowestThicknessVal.z,
+    pipeSectionId: pipeSectionIdOfLowestThicknessVal,
+    circumferenceId: circumferenceIdOfLowestThicknessVal
   }
 
   localStorage.setItem('lowestThickness', JSON.stringify(lowestThickness))
 
-  console.log('lowestThickness',lowestThickness)
+  //console.log('lowestThickness',lowestThickness)
+  
   //const randomNumbers = generateRandomNumbersInRange(-PIPE_CONSTANTS.pipeInnerRadius, PIPE_CONSTANTS.pipeInnerRadius, pipeSectionIds?.length);
   //const scaledNumbers = generateScaledNumbers(minValue, maxValue, PIPE_CONSTANTS.pipeSectionScaleFactor);
 
@@ -94,7 +101,7 @@ function gridLayout(data) {
       var circumferenceId = (parseInt(data[i].circumferenceId) - minValueCircumference) / PIPE_CONSTANTS.circumferenceScaleFactor ;
       
       //Uncomment for pipe with circumference IDs
-        var { y, z } = calculateCircumferencePointCoordinates(circumferenceId, noOfCircumferenceIds, PIPE_CONSTANTS.pipeOuterRadius);
+         var { y, z } = calculateCircumferencePointCoordinates(circumferenceId, noOfCircumferenceIds, PIPE_CONSTANTS.pipeOuterRadius);
         datum.y = y;
         datum.z = z;
 

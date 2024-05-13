@@ -12,8 +12,12 @@ const TrendTabs = () => {
   return (
     <>
       <div className='title'>
-          {activeTab === 1 && <h4>{LABEL.currentTrendTitle}</h4>}
-          {activeTab === 2 && <h4>{LABEL.upcomingTrendTitle}</h4>}
+          {activeTab === 1 && <h5>{LABEL.currentTrendTitle}</h5>}
+          {activeTab === 2 && <h5>{LABEL.upcomingTrendTitle}</h5>}
+      </div>
+
+      <div className='title' style={{ marginTop: '-30px' }}>
+        <span>Keeping the point of lowest thickness as the origin, linear regression plots for 100 x 100 points about the 4 axis lines, with trend coefficients: </span>
       </div>
 
       <div className="container">

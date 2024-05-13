@@ -7,7 +7,7 @@ import * as d3 from "d3";
 import { COLORS, THRESHOLDS } from '../../../utils/Contants';
 import DataContext from "../../../store/DataProvider";
 
-export const Heatmap = ({ width, height, newPipeData }) => {
+export const Heatmap = ({ width, height, newPipeData, newFullDataset }) => {
   const [hoveredCell, setHoveredCell] = useState(null);
   const [maxValue, setMaxValue] = useState();
   const [minValue, setMinValue] = useState();
@@ -29,7 +29,8 @@ export const Heatmap = ({ width, height, newPipeData }) => {
         if (correspondingEntry) {
         return {
             ...dataEntry,
-            pearsonCorrelation: correspondingEntry.pearsonCorrelation
+            distanceMeasure: correspondingEntry.distanceMeasure
+            //pearsonCorrelation: correspondingEntry.pearsonCorrelation
         };
         }
     
@@ -42,7 +43,7 @@ export const Heatmap = ({ width, height, newPipeData }) => {
 
   // Color scale is computed here bc it must be passed to both the renderer and the legend
   const values = updatedData
-    ?.map((d) => d.pearsonCorrelation)
+    ?.map((d) => d.distanceMeasure)
     ?.filter((d) => d !== null);
 
   const max = d3.max(values) || 0;
@@ -55,18 +56,19 @@ export const Heatmap = ({ width, height, newPipeData }) => {
 //Sending latest min and max of pearsonCoefficient to ColorLegend
  useEffect(() => {
     const values = updatedData
-        ?.map((d) => d.pearsonCorrelation)
+        ?.map((d) => d.distanceMeasure)
         ?.filter((d) => d !== null);
     
-    if(values && values.length > 0 && values[0] !== undefined) {
+    if(values && values.length > 0) {
+    // if(values && values.length > 0 && values[0] !== undefined) {
         setMaxValue(d3.max(values))
         setMinValue(d3.min(values))
     }
-
+  
  }, [updatedData])
 
   return (
-    <div style={{ position: "relative", color: '#FFF' }} >
+    <div style={{ position: "relative" }} >
       <Renderer
         width={width}
         height={height - COLOR_LEGEND_HEIGHT}
@@ -78,11 +80,12 @@ export const Heatmap = ({ width, height, newPipeData }) => {
         interactionData={hoveredCell}
         width={width}
         height={height - COLOR_LEGEND_HEIGHT}
+        colorScale={colorScale}
       />
-      <div style={{ width: "100%", display: "flex", justifyContent: "center", color: "#FFF" }}>
+      <div style={{ width: "100%", marginLeft: '60px', marginTop: '-8%' }}>
         <ColorLegend
           height={COLOR_LEGEND_HEIGHT}
-          width={200}
+          width={width - 50}
           max={maxValue}
           min={minValue}
           colorScale={colorScale}
