@@ -162,8 +162,9 @@ const TrendPlot = ({ direction }) => {
         const minSlopeDirection = Object.keys(storedSlopes).reduce((prevDir, currDir) => {
             return storedSlopes[currDir] < storedSlopes[prevDir] ? currDir : prevDir;
         });
-console.log('min slope direction', minSlopeDirection)
+
         setMinSlopeDirection(minSlopeDirection);
+        pipeCtx.setMinSlopeDirectionHandler(minSlopeDirection)
     }, [slope]) 
 
     return (

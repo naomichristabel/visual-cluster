@@ -124,9 +124,9 @@ useEffect(() => {
   }
 }, [data]);
 
-useEffect(() => {
-  console.log(minPipeSectionId, maxPipeSectionId, minCircumferenceId, maxCircumferenceId)
-}, [minPipeSectionId, maxPipeSectionId, minCircumferenceId, maxCircumferenceId])
+// useEffect(() => {
+//   console.log(minPipeSectionId, maxPipeSectionId, minCircumferenceId, maxCircumferenceId)
+// }, [minPipeSectionId, maxPipeSectionId, minCircumferenceId, maxCircumferenceId])
 
   useEffect(()=>{
     if(pipeData?.length > 1) {

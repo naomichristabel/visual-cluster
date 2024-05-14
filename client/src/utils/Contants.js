@@ -22,10 +22,15 @@ export const COLOURS = {
     white: '#FFF',
     darkBlue: '#1b2351',
     black: '#000',
-    blue: '#0000FF'
+    blue: '#0000FF',
+    darkGreyBlue: '#153448',
+    greyBlue: '#3C5B6F',
+    darkBeige: '#948979',
+    lightBeige: '#DFD0B8'
 }
 
 export const LABEL = {
+    strongestDecline: 'Strongest Decline',
     currentTrendTitle: 'Trend Analysis',
     upcomingTrendTitle: 'Predictive Trend Analysis',
     trendTabs: {
@@ -41,7 +46,8 @@ export const LABEL = {
         nw: "North-West",
         sw: "South-West",
         ne: "North-East",
-        se: "South-East"
+        se: "South-East",
+        full: "Full"
     }
 }
 

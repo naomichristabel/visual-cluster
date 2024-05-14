@@ -40,10 +40,10 @@ const IconsContainer = (props) => {
       }, [props?.isReset]);
 
   return (
-    <div className="icons-container row" style={{color: COLOURS.white, width: '500px', marginRight: '-12%'}}>
-        <div className='col-md-2 single-icon'>
-            <img src="./assets/icons/strongest-decline.svg" width={32} height={32} alt="Strongest Decline Icon" />
-        </div>
+    <div className="icons-container row" style={{color: COLOURS.white, width: '500px', marginRight: '-20%', marginBottom: '5px' }}>
+        {/* <div className='col-md-2 single-icon'>
+            <img src="./assets/icons/reduce-white.png" width={32} height={32} alt="Strongest Decline Icon" />
+        </div> */}
         <div className='col-md-2 single-icon' onClick={handleTogglePlanes}>
             <img src="./assets/icons/planes.svg" width={32} height={32} alt="Planes Icon" />
         </div>

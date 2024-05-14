@@ -11,7 +11,7 @@ import XZPlane from '../Pipeline/XZPlane.js';
 import YZPlane from '../Pipeline/YZPlane.js';
 import XYPlane from '../Pipeline/XYPlane.js';
 
-const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes }, ref) => {
+const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes, showPipe }, ref) => {
   const pipeCtx = React.useContext(DataContext);
   const [pipeData, setPipeData] = React.useState([]);
   const [pipeLength, setPipeLength] = React.useState();
@@ -95,14 +95,15 @@ const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes 
             groundColor="#080820"
             intensity={1.0}
           />
-          <group position={[-50, 0, 0]}>
-            <Cylinder height={pipeLength}/>
+          <group position={[-1950, 0, 0]}>
+            <Cylinder height={pipeLength} lowestThicknessPoint={lowestThicknessPoint} showPipe={showPipe}/>
 
             {showPlanes && 
             <>
-              <XYPlane lowestThicknessPoint={lowestThicknessPoint} width={pipeLength} height={PIPE_CONSTANTS.pipeOuterRadius * 2 + 20}/>
+              <XYPlane lowestThicknessPoint={lowestThicknessPoint} width={pipeLength + 100} height={PIPE_CONSTANTS.pipeOuterRadius * 2 + 20}/>
               <YZPlane lowestThicknessPoint={lowestThicknessPoint} width={PIPE_CONSTANTS.pipeOuterRadius * 2 + 20} height={PIPE_CONSTANTS.pipeOuterRadius * 2 + 20}/>
             </>
+            // Not used
             /* <XZPlane lowestThicknessPoint={lowestThicknessPoint} width={pipeLength} height={PIPE_CONSTANTS.pipeOuterRadius * 2 + 20}/> */
             }
 

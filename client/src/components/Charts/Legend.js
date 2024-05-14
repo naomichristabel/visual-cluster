@@ -6,10 +6,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 const Legend = (props) => {
+    const pipeCtx = useContext(DataContext);
+
     const [checkedOptions, setCheckedOptions] = useState({ a: false, b: false, c: false, d: false })
     const [isReset, setIsReset] = useState(false);
-
-    const pipeCtx = useContext(DataContext);
 
     const handleChecked = ({ id, checked }) => {
         setCheckedOptions({ ...checkedOptions, [id]: checked })
@@ -19,7 +19,8 @@ const Legend = (props) => {
       const checkedTrueOptions = Object.entries(checkedOptions)
                                                 .filter(([key, value]) => value === true)
                                                     .map(([key, value]) => key);
-      pipeCtx.setSelectedOptionsHandler(checkedTrueOptions)
+
+        pipeCtx.setSelectedOptionsHandler(checkedTrueOptions)
     }, [checkedOptions])
 
     React.useEffect(() => {

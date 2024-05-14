@@ -15,6 +15,7 @@ import Histogram from './components/Charts/Histogram.js';
 import IconsContainer from './components/ThreePointVis/IconsContainer.js';
 import Modal from './components/ThreePointVis/Modal.js';
 import Configuration from './components/Charts/Configuration.js';
+import ViewIconsContainer from './components/ThreePointVis/ViewIconsContainer.js';
 
 //const data = new Array(PIPE_CONSTANTS.pipeSectionCount).fill(0).map((d, id) => ({ id: id + 1, d: Math.round(Math.random() * 1000) / 1000 }));
 //const data = [{ id: 1500 }, { id: 1704 }, { id: 1620 }, { id: 1980 }, { id: 2000 }, { id: 2200 }, { id: 1840 }]
@@ -30,6 +31,22 @@ export default function Home() {
   const [newPipeData, setNewPipeData] = useState( {[LABEL.direction.nw]: [], [LABEL.direction.sw]: [], [LABEL.direction.ne]: [], [LABEL.direction.se]: []} );
   const [newFullDataset, setNewFullDataset] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showPipe, setShowPipe] = useState(
+    { 
+      full: false, 
+      half: {
+        west: false,
+        east: false,
+        north: false,
+        south: false
+      },
+      quad:  {
+        northWest: false,
+        northEast: false,
+        southWest: false,
+        southEast: false
+      }
+    });
 
   const visRef = React.useRef();
 
@@ -47,7 +64,7 @@ export default function Home() {
   };
 
   const handleToggleCheckbox = (flag) => {
-    setShowCheckboxes(flag)
+    setShowCheckboxes(flag);
   }
 
   const handleTogglePlanes = () => {
@@ -97,7 +114,7 @@ export default function Home() {
       return 'tooltip-default';
     }
   }
-  
+
   return (
     <>
     <DataContextProvider>
@@ -126,6 +143,7 @@ export default function Home() {
                     selectedPoint={selectedPoint}
                     onSelectPoint={setSelectedPoint}
                     showPlanes={showPlanes}
+                    showPipe={showPipe}
                   />
                 </div>
           
@@ -140,8 +158,10 @@ export default function Home() {
                   </div>
                 }
         
-                {showCheckboxes && <Legend isReset={isReset} onReset={handleResetCamera} />}
+                {showCheckboxes && <Legend isReset={isReset} onReset={handleResetCamera} showCheckboxes={showCheckboxes}/>}
  
+                <ViewIconsContainer onViewChange={setShowPipe}/>
+
                 <IconsContainer isReset={isReset} onReset={handleResetCamera} toggleCheckboxesHandler={handleToggleCheckbox} onToggle={handleTogglePlanes} onOpenInfo={openModal}/>
                
                 <Modal isOpen={isModalOpen} onClose={closeModal} />

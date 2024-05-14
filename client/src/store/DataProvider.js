@@ -6,7 +6,8 @@ export const DataContextProvider = (props) => {
     const [pipeData, setPipeData] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [density, setDensity] = useState();
-    const [correlationGridData, setCorrelationGridData] = useState()
+    const [correlationGridData, setCorrelationGridData] = useState();
+    const [minSlopeDirection, setMinSlopeDirection] = useState(null);
 
     const setPipeDataHandler = (data) => {
         setPipeData(data);
@@ -22,6 +23,10 @@ export const DataContextProvider = (props) => {
 
     const setCorrelationGridDataHandler = (data) => {
       setCorrelationGridData(data);
+    }
+
+    const setMinSlopeDirectionHandler = (data) => {
+      setMinSlopeDirection(data);
     }
 
     useEffect(() => {
@@ -74,8 +79,13 @@ export const DataContextProvider = (props) => {
       };
 
       fetchData(); 
-   
+
     }, []);
+
+    useEffect(() => {
+      //On load of application, select all points on pipe that have thickness less than minimum acceptable threshold
+      setSelectedOptions(['a'])
+    }, [pipeData])
 
     const contextValue = {
         pipeData, 
@@ -85,7 +95,9 @@ export const DataContextProvider = (props) => {
         density,
         setDensityHandler,
         correlationGridData,
-        setCorrelationGridDataHandler
+        setCorrelationGridDataHandler,
+        minSlopeDirection,
+        setMinSlopeDirectionHandler
     }
 
 return (
