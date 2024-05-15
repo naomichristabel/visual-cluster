@@ -221,7 +221,8 @@ const CylinderPoints = ({ data, layout, selectedPoints, selectedPoint, onSelectP
 
   // Locate the point of lowest thickness
   React.useEffect(() => {
-    setLowestThicknessPoint(JSON.parse(localStorage.getItem('lowestThickness')))
+    let lowestPoint = JSON.parse(localStorage.getItem('lowestThickness'))
+    setLowestThicknessPoint(lowestPoint)
   }, [localStorage.getItem('lowestThickness')])
 
   const { handleClick, handlePointerDown, handleHover } = useMousePointInteraction({

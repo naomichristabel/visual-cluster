@@ -27,6 +27,8 @@ const ViewIconsContainer = (props) => {
     const handleViewChange = (e) => {
         let direction = e.currentTarget.id;
 
+        props.toggleStripPoints(direction);
+
         if(direction === LABEL.strongestDecline) {
           setShowPipe(prevState => ({
             ...prevState,
@@ -67,6 +69,18 @@ const ViewIconsContainer = (props) => {
 
     }
 
+    
+    const formPointsStrip = (pipeSectionIdAtLowest, circumferenceIdAtLowest, pipeData) => {
+      
+      return {
+        [LABEL.direction.n]: pipeData?.filter(d => ((d.pipeSectionId >= pipeSectionIdAtLowest - 50) && (d.pipeSectionId <= pipeSectionIdAtLowest + 50) && (d.circumferenceId >= circumferenceIdAtLowest) && (d.circumferenceId <= circumferenceIdAtLowest + 100) )),
+        [LABEL.direction.s]: pipeData?.filter(d => ((d.pipeSectionId >= pipeSectionIdAtLowest - 50) && (d.pipeSectionId <= pipeSectionIdAtLowest + 50) && (d.circumferenceId <= circumferenceIdAtLowest) && (d.circumferenceId >= circumferenceIdAtLowest - 100))),
+        [LABEL.direction.e]: pipeData?.filter(d => ((d.pipeSectionId >= pipeSectionIdAtLowest) && (d.pipeSectionId <= pipeSectionIdAtLowest + 100) && (d.circumferenceId >= circumferenceIdAtLowest - 50) && (d.circumferenceId <= circumferenceIdAtLowest + 50))),
+        [LABEL.direction.w]: pipeData?.filter(d => ((d.pipeSectionId <= pipeSectionIdAtLowest) && (d.pipeSectionId >= pipeSectionIdAtLowest - 100) && (d.circumferenceId >= circumferenceIdAtLowest - 50) && (d.circumferenceId <= circumferenceIdAtLowest + 50))),
+        [LABEL.direction.full]: pipeData?.filter(d => ((d.pipeSectionId >= pipeSectionIdAtLowest - 50) && (d.pipeSectionId <= pipeSectionIdAtLowest + 50) && (d.circumferenceId >= circumferenceIdAtLowest - 50) && (d.circumferenceId <= circumferenceIdAtLowest + 50)))
+      }
+    }
+
     useEffect(() => {
         // console.log(showPipe)
         props.onViewChange(showPipe);
@@ -74,7 +88,21 @@ const ViewIconsContainer = (props) => {
 
     useEffect(() => {
       setMinSlopeDirection(pipeCtx?.minSlopeDirection)
-    }, [pipeCtx?.minSlopeDirection]);
+
+      if(pipeCtx?.pipeData?.length > 0) {
+      const lowestPoint = JSON.parse(localStorage.getItem('lowestThickness'))
+      let pointsStrip = formPointsStrip(lowestPoint?.pipeSectionId, lowestPoint?.circumferenceId, pipeCtx?.pipeData)
+      
+      //Capitalize first letter
+      let minSlopeDir = pipeCtx?.minSlopeDirection.charAt(0).toUpperCase() + pipeCtx?.minSlopeDirection.slice(1)
+
+      pointsStrip = { ...pointsStrip, [LABEL.strongestDecline]: pointsStrip[minSlopeDir]}
+
+      //console.log('strip of points along min slope direction - ',pipeCtx?.minSlopeDirection, 'is ', pointsStrip[pipeCtx?.minSlopeDirection])
+      
+      pipeCtx?.setStripPointsHandler(pointsStrip)
+      }
+    }, [pipeCtx?.minSlopeDirection, pipeCtx?.pipeData]);
 
   return (
     <div className="view-icons-container row" style={{color: COLOURS.white, width: '500px', marginRight: '-12%', marginBottom: '-12px' }}>

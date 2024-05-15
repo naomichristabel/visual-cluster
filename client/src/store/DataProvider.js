@@ -8,6 +8,7 @@ export const DataContextProvider = (props) => {
     const [density, setDensity] = useState();
     const [correlationGridData, setCorrelationGridData] = useState();
     const [minSlopeDirection, setMinSlopeDirection] = useState(null);
+    const [stripPoints, setStripPoints] = useState({});
 
     const setPipeDataHandler = (data) => {
         setPipeData(data);
@@ -15,6 +16,10 @@ export const DataContextProvider = (props) => {
 
     const setSelectedOptionsHandler = (data) => {
       setSelectedOptions(data);
+    }
+
+    const setStripPointsHandler = (data) => {
+      setStripPoints(data);
     }
 
     const setDensityHandler = (data) => {
@@ -92,6 +97,8 @@ export const DataContextProvider = (props) => {
         setPipeDataHandler,
         selectedOptions,
         setSelectedOptionsHandler,
+        stripPoints,
+        setStripPointsHandler,
         density,
         setDensityHandler,
         correlationGridData,

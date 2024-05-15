@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ThreePointVis from './components/ThreePointVis/ThreePointVis.js';
 import './styles.css';
 import { PIPE_CONSTANTS, COLOURS, LABEL } from './utils/Contants.js';
@@ -27,6 +27,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);  
   const [isReset, setIsReset] = useState(false);
   const [showCheckboxes, setShowCheckboxes] = useState(false);
+  const [usingStripPoints, setUsingStripPoints] = useState({ [LABEL.direction.n]: false, [LABEL.direction.s]: false, [LABEL.direction.e]: false, [LABEL.direction.w]: false, [LABEL.direction.full]: false, [LABEL.strongestDecline]: false });
   const [showPlanes, setShowPlanes] = useState(false);
   const [newPipeData, setNewPipeData] = useState( {[LABEL.direction.nw]: [], [LABEL.direction.sw]: [], [LABEL.direction.ne]: [], [LABEL.direction.se]: []} );
   const [newFullDataset, setNewFullDataset] = useState();
@@ -50,6 +51,8 @@ export default function Home() {
 
   const visRef = React.useRef();
 
+  const pipeCtx = useContext(DataContext);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -59,12 +62,25 @@ export default function Home() {
   };
 
   const handleResetCamera = (flag) => {
+    setUsingStripPoints(prev => ({
+      ...Object.fromEntries(Object.keys(prev).map(key => [key, false]))
+    }));
     setIsReset(flag);
     visRef.current.resetCamera();
   };
 
   const handleToggleCheckbox = (flag) => {
+    setUsingStripPoints(prev => ({
+      ...Object.fromEntries(Object.keys(prev).map(key => [key, false]))
+    }));
     setShowCheckboxes(flag);
+  }
+
+  const handleToggleStripPoints = (direction) => {
+    setShowCheckboxes(false);
+    setUsingStripPoints(prev => ({
+      ...Object.fromEntries(Object.keys(prev).map(key => [key, key === direction ? true : false]))
+    }));
   }
 
   const handleTogglePlanes = () => {
@@ -144,6 +160,7 @@ export default function Home() {
                     onSelectPoint={setSelectedPoint}
                     showPlanes={showPlanes}
                     showPipe={showPipe}
+                    usingStripPoints={usingStripPoints}
                   />
                 </div>
           
@@ -160,7 +177,7 @@ export default function Home() {
         
                 {showCheckboxes && <Legend isReset={isReset} onReset={handleResetCamera} showCheckboxes={showCheckboxes}/>}
  
-                <ViewIconsContainer onViewChange={setShowPipe}/>
+                <ViewIconsContainer onViewChange={setShowPipe} toggleStripPoints={handleToggleStripPoints}/>
 
                 <IconsContainer isReset={isReset} onReset={handleResetCamera} toggleCheckboxesHandler={handleToggleCheckbox} onToggle={handleTogglePlanes} onOpenInfo={openModal}/>
                

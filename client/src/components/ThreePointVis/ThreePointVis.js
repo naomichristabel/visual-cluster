@@ -11,7 +11,7 @@ import XZPlane from '../Pipeline/XZPlane.js';
 import YZPlane from '../Pipeline/YZPlane.js';
 import XYPlane from '../Pipeline/XYPlane.js';
 
-const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes, showPipe }, ref) => {
+const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes, showPipe, usingStripPoints }, ref) => {
   const pipeCtx = React.useContext(DataContext);
   const [pipeData, setPipeData] = React.useState([]);
   const [pipeLength, setPipeLength] = React.useState();
@@ -24,11 +24,15 @@ const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes,
   }, [localStorage.getItem('lowestThickness')])
 
   React.useEffect(() => {
+    //console.log('using strip points?',usingStripPoints)
+
+    const allValuesFalse = Object.values(usingStripPoints).every(value => value === false);
+   
     let selectedOptions = pipeCtx?.selectedOptions;
 
-//console.log('selectedOptions: ', selectedOptions)
+    // console.log('selectedOptions: ', selectedOptions)
 
-    if(selectedOptions && selectedOptions.length > 0) {
+    if(selectedOptions && selectedOptions.length > 0 && allValuesFalse) {
       let newPoints = [];
       selectedOptions.forEach(option => {
           switch(option) {
@@ -51,12 +55,15 @@ const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes,
       
       // Remove duplicates from newPoints
       const uniqueNewPoints = [...new Set(newPoints)];
-      
       setSelectedPoints(uniqueNewPoints);
+    } else if(!allValuesFalse) {
+      const whichStrip = Object.keys(usingStripPoints).find(key => usingStripPoints[key] === true);
+      setSelectedPoints(pipeCtx?.stripPoints[whichStrip]);
     } else {
       setSelectedPoints([]);
     }
-  }, [pipeCtx?.selectedOptions])
+
+  }, [pipeCtx?.selectedOptions, usingStripPoints])
   
   React.useEffect(()=>{
    //console.log('in useEff context data : ', pipeCtx.pipeData)
@@ -71,7 +78,9 @@ const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes,
 
   // React.useEffect(() => {console.log('state data in CP component...',pipeData)}, [pipeData])
 
-  //React.useEffect(() => {console.log('state data of selected points in parent ThreeVis component...',selectedPoints)}, [selectedPoints])
+  React.useEffect(() => {
+    //console.log('state data of selected points in parent ThreeVis component...',selectedPoints)
+  }, [selectedPoints])
 
   const controlsRef = React.useRef();
   React.useImperativeHandle(ref, () => ({
@@ -95,7 +104,7 @@ const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes,
             groundColor="#080820"
             intensity={1.0}
           />
-          <group position={[-1950, 0, 0]}>
+          <group position={[10 - lowestThicknessPoint?.x, 0, 0]}>
             <Cylinder height={pipeLength} lowestThicknessPoint={lowestThicknessPoint} showPipe={showPipe}/>
 
             {showPlanes && 
