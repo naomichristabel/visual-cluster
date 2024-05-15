@@ -4,7 +4,6 @@ import { useLoader } from "react-three-fiber";
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import * as THREE from 'three';
 import { COLOURS, PIPE_CONSTANTS } from "../../utils/Contants.js";
-import { CSG } from 'three-csg-ts';
 
 const drawCircle = (centerX,centerY,radius,segments,isCircle,isSemiCircle) => {
 

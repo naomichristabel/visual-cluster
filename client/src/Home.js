@@ -161,7 +161,7 @@ export default function Home() {
                     showPlanes={showPlanes}
                     showPipe={showPipe}
                     usingStripPoints={usingStripPoints}
-                  />
+                  />        
                 </div>
           
                 {selectedPoint && 

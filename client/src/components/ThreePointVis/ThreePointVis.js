@@ -10,6 +10,7 @@ import { PIPE_CONSTANTS, COLOURS } from '../../utils/Contants.js';
 import XZPlane from '../Pipeline/XZPlane.js';
 import YZPlane from '../Pipeline/YZPlane.js';
 import XYPlane from '../Pipeline/XYPlane.js';
+import CalloutBox from './CalloutBox.js';
 
 const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes, showPipe, usingStripPoints }, ref) => {
   const pipeCtx = React.useContext(DataContext);
@@ -115,6 +116,9 @@ const ThreePointVis = ({ data, layout, selectedPoint, onSelectPoint, showPlanes,
             // Not used
             /* <XZPlane lowestThicknessPoint={lowestThicknessPoint} width={pipeLength} height={PIPE_CONSTANTS.pipeOuterRadius * 2 + 20}/> */
             }
+
+
+            <CalloutBox position={{ x: lowestThicknessPoint?.x, y: lowestThicknessPoint?.y + 10, z: lowestThicknessPoint?.z }} text="LOWEST THICKNESS VALUE FOUND HERE" />
 
             <CylinderPoints 
               data={pipeData}
