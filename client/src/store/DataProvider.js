@@ -4,6 +4,7 @@ const DataContext = createContext();
 
 export const DataContextProvider = (props) => {
     const [pipeData, setPipeData] = useState([]);
+    const [histogramData, setHistogramData] = useState();
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [density, setDensity] = useState();
     const [correlationGridData, setCorrelationGridData] = useState();
@@ -83,7 +84,20 @@ export const DataContextProvider = (props) => {
         }
       };
 
+    const fetchHistogramData = async () => {
+      try {
+      const response = await fetch('./Sebastian/332001_c11_c21_ct2_ct3_complete.csv_df_plot.json');
+      const jsonData = await response.json();
+    
+      setHistogramData(jsonData);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+  };
+
       fetchData(); 
+      fetchHistogramData();
 
     }, []);
 
@@ -94,6 +108,7 @@ export const DataContextProvider = (props) => {
 
     const contextValue = {
         pipeData, 
+        histogramData,
         setPipeDataHandler,
         selectedOptions,
         setSelectedOptionsHandler,

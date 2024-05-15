@@ -77,8 +77,8 @@ const Histogram = () => {
     }
 
   useEffect(() => {
-    
-if(pipeCtx?.pipeData?.length > 0) {
+    if(pipeCtx?.pipeData?.length > 0) {
+// if(pipeCtx?.pipeData?.length > 0 && pipeCtx?.histogramData?.DistributionData) {
 
     // Calculate domain for x-axis
     const xDomain = [
@@ -88,8 +88,16 @@ if(pipeCtx?.pipeData?.length > 0) {
 
      // Kernel density estimation
      const kde = kernelDensityEstimator(epanechnikovKernel(2), Array.from({length: 200}, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200)))(pipeCtx?.pipeData.map(d => d.pipeThickness));
+     //const kdeNew = kernelDensityEstimator(epanechnikovKernel(2), Array.from({length: 200}, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200)))(pipeCtx?.histogramData?.DistributionData);
 
      setMeasures(calculateMeasures(pipeCtx?.pipeData.map(d => d.pipeThickness)));
+     //setMeasures(calculateMeasures(pipeCtx?.histogramData?.DistributionData))  /Maximum call stack size gets exceeded
+    //  setMeasures({
+    //   min: pipeCtx?.histogramData?.Min.toFixed(3),
+    //   max: pipeCtx?.histogramData?.Max.toFixed(3),
+    //   average: pipeCtx?.histogramData?.Average.toFixed(3),
+    //   stdDev: pipeCtx?.histogramData?.Std.toFixed(3)
+    //   })
 
     const binChart = Plot.plot({
         marks: [
@@ -125,7 +133,10 @@ if(pipeCtx?.pipeData?.length > 0) {
         binChart.remove();
     };
     }
-  }, [pipeCtx?.pipeData]);
+  // }, [pipeCtx?.pipeData, pipeCtx?.histogramData]);
+}, [pipeCtx?.pipeData]);
+
+  // useEffect(() => { console.log(pipeCtx?.histogramData?.DistributionData)}, [pipeCtx?.histogramData])
 
   return (
     <div>
