@@ -84,20 +84,20 @@ export const DataContextProvider = (props) => {
         }
       };
 
-    const fetchHistogramData = async () => {
-      try {
-      const response = await fetch('./Sebastian/332001_c11_c21_ct2_ct3_complete.csv_df_plot.json');
-      const jsonData = await response.json();
+  //   const fetchHistogramData = async () => {
+  //     try {
+  //     const response = await fetch('./Sebastian/332001_c11_c21_ct2_ct3_complete.csv_df_plot.json');
+  //     const jsonData = await response.json();
     
-      setHistogramData(jsonData);
+  //     setHistogramData(jsonData);
 
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-  };
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  // };
 
       fetchData(); 
-      fetchHistogramData();
+      //fetchHistogramData();
 
     }, []);
 

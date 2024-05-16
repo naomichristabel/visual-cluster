@@ -47,7 +47,7 @@ body {
 .controls {
   position: relative;
   top: 50%; /* Adjust as needed */
-  left: 50%; /* Adjust as needed */
+  left: 55%; /* Adjust as needed */
   transform: translate(-400%, -70%);
   z-index: 1;
   background: rgba(255, 255, 255);
