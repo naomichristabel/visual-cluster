@@ -205,7 +205,7 @@ export default function Home() {
             </div>
 
             <div className='row card mt-3' style={{ marginRight: '-5px'}}>
-            <HeatMap onDistanceMeasureCalc={handlePipeDataUpdate} direction={LABEL.direction.sw}/> 
+                <HeatMap onDistanceMeasureCalc={handlePipeDataUpdate} direction={LABEL.direction.sw}/> 
                 <Heatmap width={500} height={300} newPipeData={newPipeData[LABEL.direction.sw]} newFullDataset={newFullDataset}/>
             </div>
           </div>

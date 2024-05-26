@@ -94,7 +94,7 @@ const ViewIconsContainer = (props) => {
       let pointsStrip = formPointsStrip(lowestPoint?.pipeSectionId, lowestPoint?.circumferenceId, pipeCtx?.pipeData)
       
       //Capitalize first letter
-      let minSlopeDir = pipeCtx?.minSlopeDirection.charAt(0).toUpperCase() + pipeCtx?.minSlopeDirection.slice(1)
+      let minSlopeDir = pipeCtx?.minSlopeDirection?.charAt(0).toUpperCase() + pipeCtx?.minSlopeDirection?.slice(1)
 
       pointsStrip = { ...pointsStrip, [LABEL.strongestDecline]: pointsStrip[minSlopeDir]}
 

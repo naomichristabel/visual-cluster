@@ -4,21 +4,33 @@ import DataContext from '../../store/DataProvider.js';
 import { COLOURS, PIPE_CONSTANTS } from '../../utils/Contants.js';
 import * as d3 from 'd3';
 
-// Kernel density estimation function
-function kernelDensityEstimator(kernel, X) {
-    return function(V) {
-        return X.map(function(x) {
-            return [x, d3.mean(V, function(v) { return kernel(x - v); })];
-        });
-    };
-}
+// // Kernel density estimation function
+// function kernelDensityEstimator(kernel, X) {
+//     return function(V) {
+//         return X.map(function(x) {
+//             return [x, d3.mean(V, function(v) { return kernel(x - v); })];
+//         });
+//     };
+// }
 
-// Epanechnikov kernel function
-function epanechnikovKernel(scale) {
-    return function(u) {
-        return Math.abs(u /= scale) <= 1 ? 0.75 * (1 - u * u) / scale : 0;
-    };
-}
+// // Epanechnikov kernel function
+// function epanechnikovKernel(scale) {
+//     return function(u) {
+//         return Math.abs(u /= scale) <= 1 ? 0.75 * (1 - u * u) / scale : 0;
+//     };
+// }
+
+const kernelDensityEstimator = (kernel, x) => (sample) => {
+  return x.map((xi) => {
+    return [xi, d3.mean(sample, (xj) => kernel(xi - xj))];
+  });
+};
+
+const epanechnikovKernel = (bandwidth) => {
+  return (u) => {
+    return Math.abs(u /= bandwidth) <= 1 ? 0.75 * (1 - u * u) / bandwidth : 0;
+  };
+};
 
 // Calculate statistical measures for the distribution curve chart
 function calculateMeasures(kdeData) {
@@ -66,77 +78,146 @@ const Histogram = () => {
     const pipeCtx = useContext(DataContext)
 
       // Define color function to apply colors based on pipeThickness values
+  // const color = (d) => {
+  //   if (d.pipeThickness < ((0.03 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+  //     return COLOURS.purple
+  //   } else if (d.pipeThickness > ((0.03 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && d.pipeThickness < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+  //     return COLOURS.red
+  //   } else if (d.pipeThickness > ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && d.pipeThickness < ((0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+  //     return COLOURS.yellow
+  //   }
+  //   }
+
+          // Define color function to apply colors based on pipeThickness values
   const color = (d) => {
-    if (d.pipeThickness < ((0.03 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+    if (d < ((0.03 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
       return COLOURS.purple
-    } else if (d.pipeThickness > ((0.03 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && d.pipeThickness < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+    } else if (d > ((0.03 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && d < ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
       return COLOURS.red
-    } else if (d.pipeThickness > ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && d.pipeThickness < ((0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+    } else if (d > ((0.05 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold) && d < ((0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
       return COLOURS.yellow
+    } else if (d > ((0.1 * PIPE_CONSTANTS.minAcceptableThreshold) + PIPE_CONSTANTS.minAcceptableThreshold)) {
+      return COLOURS.grey
     }
     }
 
-  useEffect(() => {
-    if(pipeCtx?.pipeData?.length > 0) {
-// if(pipeCtx?.pipeData?.length > 0 && pipeCtx?.histogramData?.DistributionData) {
+//   useEffect(() => {
+//     if(pipeCtx?.pipeData?.length > 0) {
+// // if(pipeCtx?.pipeData?.length > 0 && pipeCtx?.histogramData?.DistributionData) {
 
-    // Calculate domain for x-axis
-    const xDomain = [
-        Math.min(...pipeCtx?.pipeData.map(d => d.pipeThickness)) - 2,
-        Math.max(...pipeCtx?.pipeData.map(d => d.pipeThickness)) + 2
-    ];
+//     // Calculate domain for x-axis
+//     const xDomain = [
+//         Math.min(...pipeCtx?.pipeData.map(d => d.pipeThickness)) - 2,
+//         Math.max(...pipeCtx?.pipeData.map(d => d.pipeThickness)) + 2
+//     ];
 
-     // Kernel density estimation
-     const kde = kernelDensityEstimator(epanechnikovKernel(2), Array.from({length: 200}, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200)))(pipeCtx?.pipeData.map(d => d.pipeThickness));
-     //const kdeNew = kernelDensityEstimator(epanechnikovKernel(2), Array.from({length: 200}, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200)))(pipeCtx?.histogramData?.DistributionData);
+//      // Kernel density estimation
+//      const kde = kernelDensityEstimator(epanechnikovKernel(2), Array.from({length: 200}, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200)))(pipeCtx?.pipeData.map(d => d.pipeThickness));
+//      //const kdeNew = kernelDensityEstimator(epanechnikovKernel(2), Array.from({length: 200}, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200)))(pipeCtx?.histogramData?.DistributionData);
 
-     setMeasures(calculateMeasures(pipeCtx?.pipeData.map(d => d.pipeThickness)));
-     //setMeasures(calculateMeasures(pipeCtx?.histogramData?.DistributionData))  /Maximum call stack size gets exceeded
-    //  setMeasures({
-    //   min: pipeCtx?.histogramData?.Min.toFixed(3),
-    //   max: pipeCtx?.histogramData?.Max.toFixed(3),
-    //   average: pipeCtx?.histogramData?.Average.toFixed(3),
-    //   stdDev: pipeCtx?.histogramData?.Std.toFixed(3)
-    //   })
+//      //setMeasures(calculateMeasures(pipeCtx?.pipeData.map(d => d.pipeThickness)));
+//      //setMeasures(calculateMeasures(pipeCtx?.histogramData?.DistributionData))  /Maximum call stack size gets exceeded
+//      setMeasures({
+//       min: pipeCtx?.histogramData?.Min.toFixed(3),
+//       max: pipeCtx?.histogramData?.Max.toFixed(3),
+//       average: pipeCtx?.histogramData?.Average.toFixed(3),
+//       stdDev: pipeCtx?.histogramData?.Std.toFixed(3)
+//       })
+
+//     const binChart = Plot.plot({
+//         marks: [
+//           Plot.frame({ fill: COLOURS.white }),
+//           Plot.gridX({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
+//           Plot.gridY({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
+//           Plot.rectY(
+//             pipeCtx?.pipeData,
+//             Plot.binX(
+//               { y: "proportion" },
+//               { 
+//                 x: "pipeThickness", 
+//                 fill: color,
+//                 thresholds: calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)) > 5 ? 10 : calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)), // Adjust the number of thresholds for finer intervals
+//                 title: d => `Pipe Thickness: ${d.pipeThickness} mm` // Tooltip title showing pipeThickness value
+//               },
+//             )
+//           ),
+//           Plot.line(kde, { stroke: COLOURS.white, strokeWidth: 1 }),
+//           Plot.line(kde, { stroke: COLOURS.lightGrey, strokeWidth: 2 }),
+//           Plot.ruleY([0]),
+//         ],
+//         x: { label: "Pipe Thickness (mm)", domain: xDomain, labelAnchor: "center", labelOffset: 30 },
+//         y: { label: "Count (%)", grid: true, labelAnchor: "center", labelOffset: 40, tickFormat: ".0%" },
+//         // Enable tooltips
+//         marksTooltip: true,
+//         height: 300, // Set the desired height here
+//       });
+      
+//       chartRef.current.append(binChart);
+
+//       return () => {
+//         binChart.remove();
+//     };
+//     }
+//   // }, [pipeCtx?.pipeData, pipeCtx?.histogramData]);
+// }, [pipeCtx?.pipeData]);
+
+useEffect(() => {
+if(pipeCtx?.histogramData?.DistributionData) {
+
+  // Calculate domain for x-axis
+  const xDomain = [
+    pipeCtx?.histogramData?.Min,
+    pipeCtx?.histogramData?.Max
+  ];
+
+    // Kernel density estimation
+    const xValues = Array.from({ length: 200 }, (_, i) => xDomain[0] + i * ((xDomain[1] - xDomain[0]) / 200));
+    const kde = kernelDensityEstimator(epanechnikovKernel(0.3), xValues)(pipeCtx?.histogramData?.DistributionData);
+
+     // Normalize KDE values to match histogram scale
+     const totalDensity = d3.sum(kde, d => d[1]);
+     const normalizedKde = kde.map(d => [d[0], d[1] / totalDensity]);
+
+   setMeasures({
+    min: pipeCtx?.histogramData?.Min.toFixed(3),
+    max: pipeCtx?.histogramData?.Max.toFixed(3),
+    average: pipeCtx?.histogramData?.Average.toFixed(3),
+    stdDev: pipeCtx?.histogramData?.Std.toFixed(3)
+    })
 
     const binChart = Plot.plot({
-        marks: [
-          Plot.frame({ fill: COLOURS.white }),
-          Plot.gridX({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
-          Plot.gridY({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
-          Plot.rectY(
-            pipeCtx?.pipeData,
-            Plot.binX(
-              { y: "proportion" },
-              { 
-                x: "pipeThickness", 
-                fill: color,
-                thresholds: calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)) > 5 ? 10 : calculateThresholds(pipeCtx.pipeData.map(d => d.pipeThickness)), // Adjust the number of thresholds for finer intervals
-                title: d => `Pipe Thickness: ${d.pipeThickness} mm` // Tooltip title showing pipeThickness value
-              },
-            )
-          ),
-          Plot.line(kde, { stroke: COLOURS.white, strokeWidth: 1 }),
-          Plot.line(kde, { stroke: COLOURS.lightGrey, strokeWidth: 2 }),
-          Plot.ruleY([0]),
-        ],
-        x: { label: "Pipe Thickness (mm)", domain: xDomain, labelAnchor: "center", labelOffset: 30 },
-        y: { label: "Count (%)", grid: true, labelAnchor: "center", labelOffset: 40, tickFormat: ".0%" },
-        // Enable tooltips
-        marksTooltip: true,
-        height: 300, // Set the desired height here
-      });
-      
-      chartRef.current.append(binChart);
+      marks: [
+        Plot.gridX({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
+        Plot.gridY({stroke: COLOURS.lightGrey, strokeOpacity: 1, strokeDasharray: "2,2"}),
+        Plot.rectY(
+          pipeCtx?.histogramData?.DistributionData, 
+          Plot.binX(
+            {y: "proportion"}, 
+            {x: d => d, 
+              fill: color,
+              thresholds: 100,
+              title: d => `Pipe Thickness: ${d} mm` // Tooltip title showing pipeThickness value},
+            })), 
+        Plot.line(normalizedKde, { stroke: COLOURS.white, strokeWidth: 1 }),
+        Plot.line(normalizedKde, { stroke: COLOURS.lightGrey, strokeWidth: 2 }),
+        Plot.ruleY([0]) // Adding a base line at y=0
+      ],
+      x: {
+        domain: xDomain, label: "Pipe Thickness (mm)", labelAnchor: "center", labelOffset: 25
+      },
+      y: {
+        label: "Count (%)", grid: true, labelAnchor: "center", labelOffset: 40, tickFormat: ".0%"
+      },
+      height: 400,
+    });
 
-      return () => {
-        binChart.remove();
-    };
-    }
-  // }, [pipeCtx?.pipeData, pipeCtx?.histogramData]);
-}, [pipeCtx?.pipeData]);
+    chartRef.current.append(binChart);
 
-  // useEffect(() => { console.log(pipeCtx?.histogramData?.DistributionData)}, [pipeCtx?.histogramData])
+    return () => {
+      binChart.remove();
+  };
+  }
+}, [pipeCtx?.pipeData, pipeCtx?.histogramData]);
 
   return (
     <div>
@@ -148,6 +229,7 @@ const Histogram = () => {
 
       <div className='title measures'>
         <span>{`Min: ${measures.min} - Max: ${measures.max} - Avg: ${measures.average} - Std. Dev: ${measures.stdDev}`}</span>
+        {/* <span>{`Min: 18.154 - Max: 23.992 - Avg: 20.706 - Std. Dev: 0.789`}</span> */}
       </div>
 
       <div className="histogram-legend">
@@ -164,6 +246,10 @@ const Histogram = () => {
             <div className="histogram-legend-item">
               <div className="histogram-legend-box" style={{ background: "yellow" }}></div>
               <div className="histogram-legend-label">5% to 10% of MAT</div>
+            </div>
+            <div className="histogram-legend-item">
+              <div className="histogram-legend-box" style={{ background: "grey" }}></div>
+              <div className="histogram-legend-label">&gt; 10% of MAT</div>
             </div>
           </div>
         </div>

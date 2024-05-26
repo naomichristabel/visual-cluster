@@ -44,7 +44,7 @@ const usePointColors = ({ data, selectedPoint, selectedPoints, lowestThicknessPo
         const point = data[i];
         let pointColor = COLOURS.grey;
 
-        if(data[i] === (data[lowestThicknessPoint.index])){
+        if(data[i] === (data[lowestThicknessPoint?.index])){
           pointColor = COLOURS.blue;
         }
   
@@ -75,7 +75,7 @@ const usePointColors = ({ data, selectedPoint, selectedPoints, lowestThicknessPo
         const point = data[i];
         let pointColor = COLOURS.grey;
         
-        if(data[i] === (data[lowestThicknessPoint.index])){
+        if(data[i] === (data[lowestThicknessPoint?.index])){
           pointColor = COLOURS.blue;
         }
       

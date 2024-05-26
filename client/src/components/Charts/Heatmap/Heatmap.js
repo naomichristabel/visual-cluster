@@ -20,7 +20,7 @@ export const Heatmap = ({ width, height, newPipeData, newFullDataset }) => {
     value: parseFloat(entry.pipeThickness)
   }));
 
-    // Adding pearsonCorrelation to pipeData
+    // Adding distanceMeasure to pipeData
     const updatedData = data.map(dataEntry => {
         // Find the corresponding entry in newPipeData based on x and y values
         const correspondingEntry = newPipeData?.find(pipeEntry => pipeEntry.pipeSectionId === dataEntry.x && pipeEntry.circumferenceId === dataEntry.y);
@@ -32,7 +32,7 @@ export const Heatmap = ({ width, height, newPipeData, newFullDataset }) => {
             distanceMeasure: correspondingEntry.distanceMeasure
             //pearsonCorrelation: correspondingEntry.pearsonCorrelation
         };
-        }
+        } 
     
         // If no corresponding entry is found, return the original dataEntry
         return dataEntry;

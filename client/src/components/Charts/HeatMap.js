@@ -169,7 +169,7 @@ useEffect(() => {
       }
 
       if(subPipeData?.length > 0)
-        console.log('Direction: ', direction, '------ Sub-Dataset for heatmap: ', subPipeData, '-----max for this sub-dataset----------', Math.max(...subPipeData?.map(d => d.distanceMeasure)))
+        //console.log('Direction: ', direction, '------ Sub-Dataset for heatmap: ', subPipeData, '-----max for this sub-dataset----------', Math.max(...subPipeData?.map(d => d.distanceMeasure)))
       
 
       //Send entire dataset

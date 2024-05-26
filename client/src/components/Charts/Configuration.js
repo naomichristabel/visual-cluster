@@ -15,7 +15,7 @@ const Configuration = () => {
         },
         pipeDiameter: {
             icon: <img src="./assets/icons/diameter.png" width="50" height="50" alt="Pipe"/>,
-            title: 'Pipe Diameter',
+            title: <>Pipe Diameter<br/><br/></>,
             content: '10 inch'
         },
         minAccThreshold: {
@@ -27,7 +27,7 @@ const Configuration = () => {
 
   return (
     <div style={{ width: "98%" }}>
-        <div className='row justify-content-between mb-3 flex-nowrap'>
+        <div className='row justify-content-between mb-5 flex-nowrap'>
             <div className='card col-md-6 me-1 p-3'><ConfigBox icon={configBoxData.pipeName.icon} title={configBoxData.pipeName.title} content={configBoxData.pipeName.content} /></div>
             <div className='card col-md-6 p-3'><ConfigBox icon={configBoxData.fileName.icon} title={configBoxData.fileName.title} content={configBoxData.fileName.content} /></div>
         </div>

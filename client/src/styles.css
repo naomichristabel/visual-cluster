@@ -408,3 +408,36 @@ dl dt.green{
   margin: 0;
   font-size: 8px;
 }
+
+.wo-big-text {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
+
+.wo-big-text-grey {
+  font-size: 12px;
+  text-align: justify;
+  color: #888;
+}
+
+.wo-title-grey {
+  font-size: 8px;
+  color: #888;
+}
+
+.wo-border-box {
+  border: solid 1px #cdcdcd;
+  border-radius: 3px;
+  margin: 5px;
+  margin-left: 15px;
+  width: 70px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100vw;  /* Full viewport width */
+}

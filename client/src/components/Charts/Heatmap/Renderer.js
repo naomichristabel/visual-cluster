@@ -54,17 +54,20 @@ export const Renderer = ({
         className={styles.rectangle}
         width={d.distanceMeasure ? xScale.bandwidth() + 3 : xScale.bandwidth() + 1}
         height={d.distanceMeasure ? yScale.bandwidth() + 1 : yScale.bandwidth() + 0.25}
-        fill={(d.distanceMeasure !== null) ? colorScale(d.distanceMeasure) : "#F8F8F8"}
+        fill={(d.distanceMeasure) ? colorScale(d.distanceMeasure) : COLOURS.veryLightGrey}
+        //fill={(d.distanceMeasure !== null) ? colorScale(d.distanceMeasure) : "#F8F8F8"}
         // fill={d.pearsonCorrelation ? colorScale(d.pearsonCorrelation) : "#F8F8F8"}
         onMouseEnter={(e) => {
-          setHoveredCell({
-            xLabel: String(d.x),
-            yLabel: String(d.y),
-            xPos: xPos + xScale.bandwidth() + MARGIN.left,
-            yPos: yPos + xScale.bandwidth() / 2 + MARGIN.top,
-            value: d.value ? Math.round(d.value * 100) / 100: null,
-            dist: d.distanceMeasure ? d.distanceMeasure.toFixed(3) : null
-          });
+          if (d.distanceMeasure) {
+            setHoveredCell({
+              xLabel: String(d.x),
+              yLabel: String(d.y),
+              xPos: xPos + xScale.bandwidth() + MARGIN.left,
+              yPos: yPos + xScale.bandwidth() / 2 + MARGIN.top,
+              value: d.value ? Math.round(d.value * 100) / 100 : null,
+              dist: d.distanceMeasure ? d.distanceMeasure.toFixed(3) : null
+            });
+          }
         }}
       />
     );
